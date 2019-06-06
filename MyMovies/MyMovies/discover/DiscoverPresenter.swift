@@ -14,18 +14,38 @@ import UIKit
 
 protocol DiscoverPresentationLogic
 {
-  func presentSomething(response: Discover.Something.Response)
+    func presentMoviesList(_ movies:[Discover.DiscoverMovies.Movie])
+    
+    func presentError()
+    
+    func presentNoInternetMessege()
+    
+    func presentLoadingState(_ state:Bool)
 }
 
 class DiscoverPresenter: DiscoverPresentationLogic
 {
-  weak var viewController: DiscoverDisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentSomething(response: Discover.Something.Response)
-  {
-    let viewModel = Discover.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
-  }
+   
+    weak var viewController: DiscoverDisplayLogic?
+    
+    // MARK: Present Movies list
+    
+    func presentMoviesList(_ movies:[Discover.DiscoverMovies.Movie])
+    {
+        var viewModel = Discover.DiscoverMovies.ViewModel()
+        viewModel.moviesList = movies
+        viewController?.displayMovies(viewModel: viewModel)
+    }
+    
+    func presentError() {
+        
+    }
+    
+    func presentNoInternetMessege() {
+        viewController?.displayNoInternet()
+    }
+    
+    func presentLoadingState(_ state: Bool) {
+        viewController?.displayLoading(state)
+    }
 }

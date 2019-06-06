@@ -11,21 +11,29 @@
 //
 
 import UIKit
+import TMDBSwift
 
 enum Discover
 {
   // MARK: Use cases
   
-  enum Something
+  enum DiscoverMovies
   {
     struct Request
     {
     }
-    struct Response
-    {
+    struct Movie {
+        var id :Int?
+        var title:String?
+        var posterPath:String?
+        var backdropPath:String?
+        
     }
-    struct ViewModel
-    {
+    struct Response {
+        var apiMovies : [MovieMDB]?
+    }
+    struct ViewModel {
+        var moviesList : [Movie]?
     }
   }
 }

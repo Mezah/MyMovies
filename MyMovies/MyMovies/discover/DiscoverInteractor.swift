@@ -14,28 +14,43 @@ import UIKit
 
 protocol DiscoverBusinessLogic
 {
-  func doSomething(request: Discover.Something.Request)
+  func loadPopularMovies()
 }
 
 protocol DiscoverDataStore
 {
   //var name: String { get set }
 }
+protocol DiscoverResponse :class {
+    func showMoviesList(moviesList:[Discover.DiscoverMovies.Movie])
+    func showError()
+}
 
-class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore
+class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore,DiscoverResponse
 {
+   
+    
   var presenter: DiscoverPresentationLogic?
-  var worker: DiscoverWorker?
+  var worker: DiscoverWorker? = DiscoverWorker()
   //var name: String = ""
   
   // MARK: Do something
   
-  func doSomething(request: Discover.Something.Request)
+  func loadPopularMovies()
   {
-    worker = DiscoverWorker()
-    worker?.doSomeWork()
+    // TODO check for internet connection here
+    presenter?.presentLoadingState(true)
+    worker?.fetchPopularMovies(self)
     
-    let response = Discover.Something.Response()
-    presenter?.presentSomething(response: response)
   }
+    
+    func showMoviesList(moviesList: [Discover.DiscoverMovies.Movie]) {
+        presenter?.presentLoadingState(false)
+        presenter?.presentMoviesList(moviesList)
+    }
+    
+    func showError() {
+        presenter?.presentLoadingState(false)
+    }
+    
 }

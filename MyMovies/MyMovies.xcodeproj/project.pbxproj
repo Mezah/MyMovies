@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A1200A6C22A07DF5001FF208 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1200A6B22A07DF5001FF208 /* AppDelegate.swift */; };
-		A1200A6E22A07DF5001FF208 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1200A6D22A07DF5001FF208 /* DiscoverViewController.swift */; };
+		A1200A6E22A07DF5001FF208 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1200A6D22A07DF5001FF208 /* ViewController.swift */; };
 		A1200A7122A07DF5001FF208 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1200A6F22A07DF5001FF208 /* Main.storyboard */; };
 		A1200A7422A07DF5001FF208 /* MyMovies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A1200A7222A07DF5001FF208 /* MyMovies.xcdatamodeld */; };
 		A1200A7622A07DF7001FF208 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1200A7522A07DF7001FF208 /* Assets.xcassets */; };
@@ -32,6 +32,8 @@
 		A192726322A6B30B006718A8 /* FavoriteRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192725D22A6B30B006718A8 /* FavoriteRouter.swift */; };
 		A192726422A6B30B006718A8 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192725E22A6B30B006718A8 /* FavoriteViewController.swift */; };
 		A192726522A6B30B006718A8 /* FavoriteWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192725F22A6B30B006718A8 /* FavoriteWorker.swift */; };
+		A1E5CA5122A9C7EE00471129 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E5CA5022A9C7EE00471129 /* Mapper.swift */; };
+		A1E5CA5322A9CA6900471129 /* ApiConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E5CA5222A9CA6900471129 /* ApiConfiguration.swift */; };
 		FA58870CC52C9CBB726A2832 /* Pods_MyMovies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCA7AEB7875A3C565C95299 /* Pods_MyMovies.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +42,7 @@
 		7982C2840DD659DAD2B63B71 /* Pods-MyMovies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyMovies.debug.xcconfig"; path = "Target Support Files/Pods-MyMovies/Pods-MyMovies.debug.xcconfig"; sourceTree = "<group>"; };
 		A1200A6822A07DF5001FF208 /* MyMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1200A6B22A07DF5001FF208 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A1200A6D22A07DF5001FF208 /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
+		A1200A6D22A07DF5001FF208 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A1200A7022A07DF5001FF208 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A1200A7322A07DF5001FF208 /* MyMovies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyMovies.xcdatamodel; sourceTree = "<group>"; };
 		A1200A7522A07DF7001FF208 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,6 +67,8 @@
 		A192725D22A6B30B006718A8 /* FavoriteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRouter.swift; sourceTree = "<group>"; };
 		A192725E22A6B30B006718A8 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		A192725F22A6B30B006718A8 /* FavoriteWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteWorker.swift; sourceTree = "<group>"; };
+		A1E5CA5022A9C7EE00471129 /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
+		A1E5CA5222A9CA6900471129 /* ApiConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConfiguration.swift; sourceTree = "<group>"; };
 		EC6A0BCF9523D69E2DA56DDE /* Pods-MyMovies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyMovies.release.xcconfig"; path = "Target Support Files/Pods-MyMovies/Pods-MyMovies.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,13 +118,15 @@
 				A192724C22A6B2BD006718A8 /* discover */,
 				A192724B22A6B23F006718A8 /* search */,
 				A1200A6B22A07DF5001FF208 /* AppDelegate.swift */,
-				A1200A6D22A07DF5001FF208 /* DiscoverViewController.swift */,
+				A1200A6D22A07DF5001FF208 /* ViewController.swift */,
 				A1200A6F22A07DF5001FF208 /* Main.storyboard */,
 				A1200A7522A07DF7001FF208 /* Assets.xcassets */,
 				A1200A7722A07DF7001FF208 /* LaunchScreen.storyboard */,
 				A1200A7A22A07DF7001FF208 /* Info.plist */,
 				A1200A7222A07DF5001FF208 /* MyMovies.xcdatamodeld */,
 				A192723D22A6AE48006718A8 /* ViewProtocol.swift */,
+				A1E5CA5022A9C7EE00471129 /* Mapper.swift */,
+				A1E5CA5222A9CA6900471129 /* ApiConfiguration.swift */,
 			);
 			path = MyMovies;
 			sourceTree = "<group>";
@@ -289,7 +295,7 @@
 			files = (
 				A192726322A6B30B006718A8 /* FavoriteRouter.swift in Sources */,
 				A192726522A6B30B006718A8 /* FavoriteWorker.swift in Sources */,
-				A1200A6E22A07DF5001FF208 /* DiscoverViewController.swift in Sources */,
+				A1200A6E22A07DF5001FF208 /* ViewController.swift in Sources */,
 				A192724A22A6B228006718A8 /* SearchWorker.swift in Sources */,
 				A1200A7422A07DF5001FF208 /* MyMovies.xcdatamodeld in Sources */,
 				A192723E22A6AE48006718A8 /* ViewProtocol.swift in Sources */,
@@ -298,12 +304,14 @@
 				A1200A6C22A07DF5001FF208 /* AppDelegate.swift in Sources */,
 				A192724822A6B228006718A8 /* SearchRouter.swift in Sources */,
 				A192726022A6B30B006718A8 /* FavoriteInteractor.swift in Sources */,
+				A1E5CA5322A9CA6900471129 /* ApiConfiguration.swift in Sources */,
 				A192726422A6B30B006718A8 /* FavoriteViewController.swift in Sources */,
 				A192725822A6B2E2006718A8 /* DiscoverWorker.swift in Sources */,
 				A192726222A6B30B006718A8 /* FavoritePresenter.swift in Sources */,
 				A192725522A6B2E2006718A8 /* DiscoverPresenter.swift in Sources */,
 				A192726122A6B30B006718A8 /* FavoriteModels.swift in Sources */,
 				A192725722A6B2E2006718A8 /* DiscoverViewController.swift in Sources */,
+				A1E5CA5122A9C7EE00471129 /* Mapper.swift in Sources */,
 				A192724522A6B228006718A8 /* SearchInteractor.swift in Sources */,
 				A192724622A6B228006718A8 /* SearchModels.swift in Sources */,
 				A192725622A6B2E2006718A8 /* DiscoverRouter.swift in Sources */,

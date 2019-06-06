@@ -11,10 +11,26 @@
 //
 
 import UIKit
+import TMDBSwift
 
-class DiscoverWorker
-{
-  func doSomeWork()
-  {
-  }
+
+class DiscoverWorker {
+    func fetchPopularMovies(_ results:DiscoverResponse)  {
+        
+        DiscoverMDB.discover(discoverType: DiscoverType.movie	, params: [DiscoverParam.sort_by(DiscoverSortByMovie.popularity_desc.rawValue)]) {
+            (clientReturn, moviesList, TvList) in
+            
+            if let error = clientReturn.error {
+                // handle error
+                print(error.localizedDescription)
+                results.showError()
+                return
+            }
+            if let apiMoviesList = moviesList {
+                let appMovies = convertMovies(movieDb: apiMoviesList)
+                results.showMoviesList(moviesList: appMovies)
+            }
+            
+        }
+    }
 }

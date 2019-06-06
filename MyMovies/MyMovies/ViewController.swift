@@ -10,7 +10,7 @@ import UIKit
 import TMDBSwift
 import PKHUD
 
-class DiscoverViewController: UIViewController , ViewProtocol {
+class ViewController: UIViewController , ViewProtocol {
     func showLoading(show state: Bool) {
         if state {
            HUD.show(.progress, onView: nil)
