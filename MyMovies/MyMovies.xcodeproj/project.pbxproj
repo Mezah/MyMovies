@@ -13,6 +13,7 @@
 		A1200A7422A07DF5001FF208 /* MyMovies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A1200A7222A07DF5001FF208 /* MyMovies.xcdatamodeld */; };
 		A1200A7622A07DF7001FF208 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1200A7522A07DF7001FF208 /* Assets.xcassets */; };
 		A1200A7922A07DF7001FF208 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1200A7722A07DF7001FF208 /* LaunchScreen.storyboard */; };
+		A1641F3822AAFBC20036E1B7 /* DiscoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1641F3722AAFBC20036E1B7 /* DiscoverCell.swift */; };
 		A192723E22A6AE48006718A8 /* ViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192723D22A6AE48006718A8 /* ViewProtocol.swift */; };
 		A192724522A6B228006718A8 /* SearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192723F22A6B228006718A8 /* SearchInteractor.swift */; };
 		A192724622A6B228006718A8 /* SearchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192724022A6B228006718A8 /* SearchModels.swift */; };
@@ -48,6 +49,7 @@
 		A1200A7522A07DF7001FF208 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1200A7822A07DF7001FF208 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1200A7A22A07DF7001FF208 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1641F3722AAFBC20036E1B7 /* DiscoverCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCell.swift; sourceTree = "<group>"; };
 		A192723D22A6AE48006718A8 /* ViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProtocol.swift; sourceTree = "<group>"; };
 		A192723F22A6B228006718A8 /* SearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInteractor.swift; sourceTree = "<group>"; };
 		A192724022A6B228006718A8 /* SearchModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModels.swift; sourceTree = "<group>"; };
@@ -131,6 +133,14 @@
 			path = MyMovies;
 			sourceTree = "<group>";
 		};
+		A1641F3622AAFBA30036E1B7 /* customviews */ = {
+			isa = PBXGroup;
+			children = (
+				A1641F3722AAFBC20036E1B7 /* DiscoverCell.swift */,
+			);
+			path = customviews;
+			sourceTree = "<group>";
+		};
 		A192724B22A6B23F006718A8 /* search */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +157,7 @@
 		A192724C22A6B2BD006718A8 /* discover */ = {
 			isa = PBXGroup;
 			children = (
+				A1641F3622AAFBA30036E1B7 /* customviews */,
 				A192724D22A6B2E2006718A8 /* DiscoverInteractor.swift */,
 				A192724E22A6B2E2006718A8 /* DiscoverModels.swift */,
 				A192724F22A6B2E2006718A8 /* DiscoverPresenter.swift */,
@@ -299,6 +310,7 @@
 				A192724A22A6B228006718A8 /* SearchWorker.swift in Sources */,
 				A1200A7422A07DF5001FF208 /* MyMovies.xcdatamodeld in Sources */,
 				A192723E22A6AE48006718A8 /* ViewProtocol.swift in Sources */,
+				A1641F3822AAFBC20036E1B7 /* DiscoverCell.swift in Sources */,
 				A192725322A6B2E2006718A8 /* DiscoverInteractor.swift in Sources */,
 				A192724922A6B228006718A8 /* SearchViewController.swift in Sources */,
 				A1200A6C22A07DF5001FF208 /* AppDelegate.swift in Sources */,

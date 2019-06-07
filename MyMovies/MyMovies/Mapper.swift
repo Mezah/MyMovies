@@ -11,12 +11,14 @@ import TMDBSwift
 
 func convertMovies(movieDb apiMovies:[MovieMDB]) -> [Discover.DiscoverMovies.Movie] {
     var moviesList = [Discover.DiscoverMovies.Movie]()
+    let baseUrl = ApiConfiguration.shared.baseUrl
+    let posterSize = ApiConfiguration.shared.posterSize[4]
     for apiMovie in apiMovies {
         var movie = Discover.DiscoverMovies.Movie()
         movie.id = apiMovie.id
         movie.title = apiMovie.title
-        movie.posterPath = apiMovie.poster_path
-        movie.backdropPath = apiMovie.backdrop_path
+        movie.posterPath = String(baseUrl + posterSize + apiMovie.poster_path!)
+        movie.backdropPath = String(baseUrl + posterSize + apiMovie.backdrop_path!)
         moviesList.append(movie)
     }
     

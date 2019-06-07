@@ -11,7 +11,7 @@
 //
 
 import UIKit
-import PKHUD
+import Kingfisher
 
 protocol DiscoverDisplayLogic: class
 {
@@ -20,10 +20,13 @@ protocol DiscoverDisplayLogic: class
     func displayLoading(_ show:Bool)
 }
 
-class DiscoverViewController: UIViewController, DiscoverDisplayLogic{
+class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, DiscoverDisplayLogic{
     
+    
+    @IBOutlet weak var moviesCollection: UICollectionView!
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     
+    private var moviesList : [Discover.DiscoverMovies.Movie] = [Discover.DiscoverMovies.Movie]()
     var interactor: DiscoverBusinessLogic?
     var router: (NSObjectProtocol & DiscoverRoutingLogic & DiscoverDataPassing)?
     
@@ -80,7 +83,7 @@ class DiscoverViewController: UIViewController, DiscoverDisplayLogic{
         loadMovies()
     }
     
-    // MARK: Do something
+    // MARK: Load Movies
     
     //@IBOutlet weak var nameTextField: UITextField!
     
@@ -97,6 +100,8 @@ class DiscoverViewController: UIViewController, DiscoverDisplayLogic{
             print(movie.posterPath)
             print(movie.backdropPath)
         }
+        self.moviesList = viewModel.moviesList!
+        self.moviesCollection.reloadData()
     }
     
     func displayNoInternet() {
@@ -107,5 +112,21 @@ class DiscoverViewController: UIViewController, DiscoverDisplayLogic{
         
     progressIndicator.isHidden = !show
        
+    }
+    
+    // MARK: CollectionViewController protocol
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return moviesList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "discoverCell", for: indexPath) as! DiscoverCell
+        let movie = moviesList[(indexPath as NSIndexPath).row]
+        cell.moviePoster.kf.indicatorType = .activity
+        let posterUrl = URL(string: movie.posterPath!)
+        cell.moviePoster.kf.setImage(with: posterUrl)
+        return cell
     }
 }
