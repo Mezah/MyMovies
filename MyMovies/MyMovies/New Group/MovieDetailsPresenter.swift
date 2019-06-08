@@ -14,7 +14,7 @@ import UIKit
 
 protocol MovieDetailsPresentationLogic
 {
-  func presentSomething()
+  func presentMovieDetails(movieDetails details:MovieData.MovieInformation.MovieDetails)
 }
 
 class MovieDetailsPresenter: MovieDetailsPresentationLogic
@@ -23,9 +23,9 @@ class MovieDetailsPresenter: MovieDetailsPresentationLogic
   
   // MARK: Do something
   
-  func presentSomething()
+  func presentMovieDetails(movieDetails details:MovieData.MovieInformation.MovieDetails)
   {
     let viewModel = MovieData.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
+    viewController?.displatMovieInformation(viewModel: viewModel)
   }
 }

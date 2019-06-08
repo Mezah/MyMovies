@@ -14,7 +14,7 @@ import UIKit
 
 protocol MovieDetailsDisplayLogic: class
 {
-    func displaySomething(viewModel: MovieData.ViewModel)
+    func displatMovieInformation(viewModel: MovieData.ViewModel)
 }
 
 class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
@@ -75,18 +75,16 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
         loadMovieDetails()
     }
     
-    // MARK: Do something
+    // MARK: Load Movie Details
     
     //@IBOutlet weak var nameTextField: UITextField!
     
-    func loadMovieDetails()
-    {
-        let request = MovieData.MovieInformation.Request(movieID: movieId)
+    func loadMovieDetails(){
+        let request = MovieData.MovieInformation.Request()
         interactor?.loadMovieDetails(request: request)
     }
     
-    func displaySomething(viewModel: MovieData.ViewModel)
-    {
+    func displatMovieInformation(viewModel: MovieData.ViewModel){
         
     }
 }

@@ -18,6 +18,12 @@ class MovieDetailsWorker
     func loadMovieDetails(_ movieId:Int)
     {
         MovieMDB.movie(movieID: movieId, completion: ({ (clientReturn, movieInfo) in
+            if let error = clientReturn.error {
+                // handle error
+                print(error.localizedDescription)
+            
+                return
+            }
             print(movieInfo?.budget)
             print(movieInfo?.homepage)
             print(movieInfo?.tagline)

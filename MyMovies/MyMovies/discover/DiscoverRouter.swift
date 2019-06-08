@@ -14,7 +14,7 @@ import UIKit
 
 @objc protocol DiscoverRoutingLogic
 {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+  func routeToMovieDetails(segue: UIStoryboardSegue?)
 }
 
 protocol DiscoverDataPassing
@@ -29,32 +29,41 @@ class DiscoverRouter: NSObject, DiscoverRoutingLogic, DiscoverDataPassing
   
   // MARK: Routing
   
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
+  func routeToMovieDetails(segue: UIStoryboardSegue?)
+  {
+    if let segue = segue {
+      let destinationVC = segue.destination as! MovieDetailsViewController
+      var destinationDS = destinationVC.router!.dataStore!
+      passDataToMovieDetails(source: dataStore!, destination: &destinationDS)
+    } else {
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      let destinationVC = storyboard.instantiateViewController(withIdentifier: "MovieDetails") as! MovieDetailsViewController
+      var destinationDS = destinationVC.router!.dataStore!
+    
+      passDataToMovieDetails(source: dataStore!, destination: &destinationDS)
+      navigateToMovieDetails(source: viewController!, destination: destinationVC)
+    }
+  }
 
-  // MARK: Navigation
+   //MARK: Navigation
   
-  //func navigateToSomewhere(source: DiscoverViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
+  func navigateToMovieDetails(source: DiscoverViewController, destination: MovieDetailsViewController)
+  {
+    source.show(destination, sender: nil)
+  }
   
-  // MARK: Passing data
+   //MARK: Passing data
   
-  //func passDataToSomewhere(source: DiscoverDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+    func passDataToMovieDetails(source: DiscoverDataStore, destination: inout MovieDetailsDataStore)
+  {
+    
+    let selectedRow = viewController?.selectedCellIndex
+    if let row = selectedRow {
+        let movieId = source.moviesList[row].id!
+        if movieId > 0 {
+         destination.movieId = movieId
+        }
+    }
+    
+  }
 }

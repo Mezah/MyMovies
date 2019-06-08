@@ -29,7 +29,7 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
     private var moviesList : [Discover.DiscoverMovies.Movie] = [Discover.DiscoverMovies.Movie]()
     var interactor: DiscoverBusinessLogic?
     var router: (NSObjectProtocol & DiscoverRoutingLogic & DiscoverDataPassing)?
-    
+    var selectedCellIndex :Int = -1
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
@@ -67,6 +67,8 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
+        let sender = sender as! DiscoverCell
+        selectedCellIndex = moviesCollection?.indexPath(for: sender)?.row ?? -1
         if let scene = segue.identifier {
             let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
             if let router = router, router.responds(to: selector) {

@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="1788" y="-824"/>
         </scene>
-        <!--View Controller-->
+        <!--Movie Details View Controller-->
         <scene sceneID="DKw-QR-b5h">
             <objects>
-                <viewController id="SYH-rY-TTa" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieDetails" id="SYH-rY-TTa" customClass="MovieDetailsViewController" customModule="MyMovies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pYz-lG-JoS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -200,7 +200,7 @@
                                         <connections>
                                             <outlet property="moviePoster" destination="3CX-dN-ebC" id="QNI-fp-e64"/>
                                             <outlet property="movieTitle" destination="5qQ-PT-6Bx" id="TQK-dF-pVr"/>
-                                            <segue destination="SYH-rY-TTa" kind="show" id="wQL-N9-PCf"/>
+                                            <segue destination="SYH-rY-TTa" kind="show" identifier="MovieDetails" id="wQL-N9-PCf"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

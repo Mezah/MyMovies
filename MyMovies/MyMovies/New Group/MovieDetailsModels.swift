@@ -19,10 +19,7 @@ enum MovieData
     enum MovieInformation
     {
         struct Request{
-            var movieId:Int
-            init(movieID ID :Int) {
-                self.movieId = ID
-            }
+           
         }
         struct Response {
         }
@@ -68,9 +65,6 @@ enum MovieData
         }
     }
     struct ViewModel{
-        var movieDetails:MovieData.MovieInformation.MovieDetails
-        init(_ details:MovieData.MovieInformation.MovieDetails) {
-            self.movieDetails = details
-        }
+        
     }
 }

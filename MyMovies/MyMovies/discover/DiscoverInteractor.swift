@@ -20,7 +20,7 @@ protocol DiscoverBusinessLogic
 
 protocol DiscoverDataStore
 {
-    //var name: String { get set }
+    var moviesList: [Discover.DiscoverMovies.Movie] { get set }
 }
 protocol DiscoverResponse :class {
     func showMoviesList(moviesList:[Discover.DiscoverMovies.Movie])
@@ -29,6 +29,8 @@ protocol DiscoverResponse :class {
 
 class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore,DiscoverResponse
 {
+    var moviesList: [Discover.DiscoverMovies.Movie] = [Discover.DiscoverMovies.Movie]()
+    
    
     var presenter: DiscoverPresentationLogic?
     var worker: DiscoverWorker? = DiscoverWorker()
@@ -50,6 +52,7 @@ class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore,DiscoverRespo
     }
     
     func showMoviesList(moviesList: [Discover.DiscoverMovies.Movie]) {
+        self.moviesList = moviesList
         presenter?.presentLoadingState(false)
         presenter?.presentMoviesList(moviesList)
     }

@@ -19,23 +19,25 @@ protocol MovieDetailsBusinessLogic
 
 protocol MovieDetailsDataStore
 {
-  //var name: String { get set }
+  var movieId: Int { get set }
 }
 
 class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore
 {
+    var movieId: Int = 0
+    
   var presenter: MovieDetailsPresentationLogic?
   var worker: MovieDetailsWorker?
-  //var name: String = ""
+  
   
   // MARK: Do something
   
   func loadMovieDetails(request: MovieData.MovieInformation.Request)
   {
     worker = MovieDetailsWorker()
-//    worker?.loadMovieDetails()
+    worker?.loadMovieDetails(movieId)
     
 //    let response = MovieDetails.MovieInformation.Response()
-//    presenter?.presentSomething(response: response)
+//    presenter?.presentMovieDetails(r)
   }
 }
