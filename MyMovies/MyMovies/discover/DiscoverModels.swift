@@ -34,7 +34,7 @@ enum Discover
         var apiMovies : [MovieMDB]?
     }
     struct ViewModel {
-        var moviesList : [Movie]?
+        var moviesList : [LocalMovie]?
     }
   }
 }

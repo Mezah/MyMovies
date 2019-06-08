@@ -104,7 +104,7 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
         self.movieRate.text = viewModel.rate
         self.movieReviewers.text = viewModel.movieReviewers
         self.movieOverview.text = viewModel.movieOverView
-        
+        // TODO set navigation bar title
     }
     
     func displayNoInternet() {

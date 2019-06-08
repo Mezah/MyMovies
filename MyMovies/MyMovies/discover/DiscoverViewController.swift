@@ -25,7 +25,7 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
     @IBOutlet weak var moviesCollection: UICollectionView!
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     
-    private var moviesList : [Discover.DiscoverMovies.Movie] = [Discover.DiscoverMovies.Movie]()
+    private var moviesList : [LocalMovie] = [LocalMovie]()
     var interactor: DiscoverBusinessLogic?
     var router: (NSObjectProtocol & DiscoverRoutingLogic & DiscoverDataPassing)?
     var selectedCellIndex :Int = -1
@@ -125,7 +125,7 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
         cell.moviePoster.kf.indicatorType = .activity
         let posterUrl = URL(string: movie.posterPath!)
         cell.moviePoster.kf.setImage(with: posterUrl)
-        cell.movieTitle.text = String(movie.title!)
+        cell.movieTitle.text = String(movie.movieTitle!)
         return cell
     }
 }

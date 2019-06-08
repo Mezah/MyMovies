@@ -12,9 +12,11 @@
 
 import UIKit
 import TMDBSwift
-
+import CoreData
 
 class DiscoverWorker {
+    private let dataController = DataController.shared
+    
     func fetchMoviesWith(_ request: Discover.DiscoverMovies.Request,_ results:DiscoverResponse)  {
         
         let params:String
@@ -25,21 +27,45 @@ class DiscoverWorker {
         case .Recent:
             params =  DiscoverSortByMovie.release_date_desc.rawValue
         }
-        
-        DiscoverMDB.discover(discoverType: DiscoverType.movie	, params: [DiscoverParam.sort_by(params)]) {
-            (clientReturn, moviesList, TvList) in
+        // fetch data locally first if not found call api
+        let fetchReq : NSFetchRequest<LocalMovie> = LocalMovie.fetchRequest()
+        if let movieResults = try? dataController.viewContext.fetch(fetchReq){
             
-            if let error = clientReturn.error {
-                // handle error
-                print(error.localizedDescription)
-                results.showError()
-                return
+            if movieResults.isEmpty {
+                
+                DiscoverMDB.discover(discoverType: DiscoverType.movie    , params: [DiscoverParam.sort_by(params)]) {
+                    (clientReturn, moviesList, TvList) in
+                    
+                    if let error = clientReturn.error {
+                        // handle error
+                        print(error.localizedDescription)
+                        results.showError()
+                        return
+                    }
+                    
+                    var localMovies = [LocalMovie]()
+                    if let apiMoviesList = moviesList {
+                        let appMovies = convertMovies(movieDb: apiMoviesList)
+                        for movie in appMovies {
+                            let localMovie = LocalMovie(context: self.dataController.viewContext)
+                            localMovie.id = String(describing: movie.id!)
+                            localMovie.movieTitle = movie.title
+                            localMovie.backdrop = movie.backdropPath
+                            localMovie.posterPath = movie.posterPath
+                            localMovie.movieRate = movie.movieRate!
+                            localMovies.append(localMovie)
+                            try? self.dataController.viewContext.save()
+                        }
+                        results.showMoviesList(moviesList: localMovies)
+                        
+                    }
+                }
             }
-            if let apiMoviesList = moviesList {
-                let appMovies = convertMovies(movieDb: apiMoviesList)
-                results.showMoviesList(moviesList: appMovies)
+            else {
+                results.showMoviesList(moviesList: movieResults)
             }
-            
         }
+        
+        
     }
 }

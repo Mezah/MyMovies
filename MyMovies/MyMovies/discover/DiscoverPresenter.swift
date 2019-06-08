@@ -14,7 +14,7 @@ import UIKit
 
 protocol DiscoverPresentationLogic : MainPresenter
 {
-    func presentMoviesList(_ movies:[Discover.DiscoverMovies.Movie])
+    func presentMoviesList(_ movies:[LocalMovie])
 }
 
 class DiscoverPresenter: DiscoverPresentationLogic
@@ -24,7 +24,7 @@ class DiscoverPresenter: DiscoverPresentationLogic
     
     // MARK: Present Movies list
     
-    func presentMoviesList(_ movies:[Discover.DiscoverMovies.Movie])
+    func presentMoviesList(_ movies:[LocalMovie])
     {
         var viewModel = Discover.DiscoverMovies.ViewModel()
         viewModel.moviesList = movies

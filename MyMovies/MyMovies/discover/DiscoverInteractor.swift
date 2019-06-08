@@ -20,16 +20,16 @@ protocol DiscoverBusinessLogic
 
 protocol DiscoverDataStore
 {
-    var moviesList: [Discover.DiscoverMovies.Movie] { get set }
+    var moviesList: [LocalMovie] { get set }
 }
 protocol DiscoverResponse :class {
-    func showMoviesList(moviesList:[Discover.DiscoverMovies.Movie])
+    func showMoviesList(moviesList:[LocalMovie])
     func showError()
 }
 
 class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore,DiscoverResponse
 {
-    var moviesList: [Discover.DiscoverMovies.Movie] = [Discover.DiscoverMovies.Movie]()
+    var moviesList: [LocalMovie] = [LocalMovie]()
     
    
     var presenter: DiscoverPresentationLogic?
@@ -51,7 +51,7 @@ class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore,DiscoverRespo
         worker?.fetchMoviesWith(Discover.DiscoverMovies.Request.Recent,self)
     }
     
-    func showMoviesList(moviesList: [Discover.DiscoverMovies.Movie]) {
+    func showMoviesList(moviesList:[LocalMovie]) {
         self.moviesList = moviesList
         presenter?.presentLoadingState(false)
         presenter?.presentMoviesList(moviesList)

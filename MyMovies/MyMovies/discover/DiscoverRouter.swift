@@ -14,56 +14,54 @@ import UIKit
 
 @objc protocol DiscoverRoutingLogic
 {
-  func routeToMovieDetails(segue: UIStoryboardSegue?)
+    func routeToMovieDetails(segue: UIStoryboardSegue?)
 }
 
 protocol DiscoverDataPassing
 {
-  var dataStore: DiscoverDataStore? { get }
+    var dataStore: DiscoverDataStore? { get }
 }
 
 class DiscoverRouter: NSObject, DiscoverRoutingLogic, DiscoverDataPassing
 {
-  weak var viewController: DiscoverViewController?
-  var dataStore: DiscoverDataStore?
-  
-  // MARK: Routing
-  
-  func routeToMovieDetails(segue: UIStoryboardSegue?)
-  {
-    if let segue = segue {
-      let destinationVC = segue.destination as! MovieDetailsViewController
-      var destinationDS = destinationVC.router!.dataStore!
-      passDataToMovieDetails(source: dataStore!, destination: &destinationDS)
-    } else {
-      let storyboard = UIStoryboard(name: "Main", bundle: nil)
-      let destinationVC = storyboard.instantiateViewController(withIdentifier: "MovieDetails") as! MovieDetailsViewController
-      var destinationDS = destinationVC.router!.dataStore!
+    weak var viewController: DiscoverViewController?
+    var dataStore: DiscoverDataStore?
     
-      passDataToMovieDetails(source: dataStore!, destination: &destinationDS)
-      navigateToMovieDetails(source: viewController!, destination: destinationVC)
-    }
-  }
-
-   //MARK: Navigation
-  
-  func navigateToMovieDetails(source: DiscoverViewController, destination: MovieDetailsViewController)
-  {
-    source.show(destination, sender: nil)
-  }
-  
-   //MARK: Passing data
-  
-    func passDataToMovieDetails(source: DiscoverDataStore, destination: inout MovieDetailsDataStore)
-  {
+    // MARK: Routing
     
-    let selectedRow = viewController?.selectedCellIndex
-    if let row = selectedRow {
-        let movieId = source.moviesList[row].id!
-        if movieId > 0 {
-         destination.movieId = movieId
+    func routeToMovieDetails(segue: UIStoryboardSegue?)
+    {
+        if let segue = segue {
+            let destinationVC = segue.destination as! MovieDetailsViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToMovieDetails(source: dataStore!, destination: &destinationDS)
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let destinationVC = storyboard.instantiateViewController(withIdentifier: "MovieDetails") as! MovieDetailsViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            
+            passDataToMovieDetails(source: dataStore!, destination: &destinationDS)
+            navigateToMovieDetails(source: viewController!, destination: destinationVC)
         }
     }
     
-  }
+    //MARK: Navigation
+    
+    func navigateToMovieDetails(source: DiscoverViewController, destination: MovieDetailsViewController)
+    {
+        source.show(destination, sender: nil)
+    }
+    
+    //MARK: Passing data
+    
+    func passDataToMovieDetails(source: DiscoverDataStore, destination: inout MovieDetailsDataStore)
+    {
+        
+        let selectedRow = viewController?.selectedCellIndex
+        if let row = selectedRow {
+            let movieId = source.moviesList[row].id!
+            destination.movieId = Int(movieId) ?? 0
+            
+        }
+    }
 }
