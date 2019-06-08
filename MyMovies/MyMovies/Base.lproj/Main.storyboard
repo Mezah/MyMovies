@@ -33,15 +33,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xFV-fo-xR6">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </activityIndicatorView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eLU-uo-AYr">
                                 <rect key="frame" x="0.0" y="64" width="375" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="BA1-Po-7Ed"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Captain Marvel " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Loa-eT-nwN">
-                                <rect key="frame" x="5" y="224" width="244.5" height="39.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Captain Marvel " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Loa-eT-nwN">
+                                <rect key="frame" x="5" y="224" width="259.5" height="39.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -70,7 +73,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Roj-sN-yHq">
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Roj-sN-yHq">
                                 <rect key="frame" x="269.5" y="224" width="95.5" height="39.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_grade_black_24pt_2x" translatesAutoresizingMaskIntoConstraints="NO" id="xp9-LP-a0V">
@@ -109,8 +112,10 @@
                             <constraint firstItem="eLU-uo-AYr" firstAttribute="top" secondItem="tXO-nJ-T3n" secondAttribute="top" id="5Ab-l8-XsO"/>
                             <constraint firstItem="Nkq-Xf-7Ee" firstAttribute="top" secondItem="NnK-LK-9Fv" secondAttribute="bottom" constant="12" id="6g0-iS-mCY"/>
                             <constraint firstItem="Nkq-Xf-7Ee" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="71F-Pg-abf"/>
+                            <constraint firstItem="xFV-fo-xR6" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" id="75E-Wm-CpG"/>
                             <constraint firstItem="cQf-cV-npJ" firstAttribute="leading" secondItem="JV5-bX-lpH" secondAttribute="trailing" constant="-88" id="BVe-hl-gOF"/>
                             <constraint firstItem="tXO-nJ-T3n" firstAttribute="trailing" secondItem="Roj-sN-yHq" secondAttribute="trailing" constant="10" id="CkT-1A-jQw"/>
+                            <constraint firstItem="tXO-nJ-T3n" firstAttribute="bottom" secondItem="xFV-fo-xR6" secondAttribute="bottom" id="FAq-66-CWP"/>
                             <constraint firstItem="tXO-nJ-T3n" firstAttribute="trailing" secondItem="eLU-uo-AYr" secondAttribute="trailing" id="FGy-8Q-uPE"/>
                             <constraint firstItem="Loa-eT-nwN" firstAttribute="top" secondItem="eLU-uo-AYr" secondAttribute="bottom" constant="10" id="J7Q-hW-e7t"/>
                             <constraint firstItem="NnK-LK-9Fv" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="JyZ-Dx-n0a"/>
@@ -119,15 +124,26 @@
                             <constraint firstItem="NnK-LK-9Fv" firstAttribute="top" secondItem="JV5-bX-lpH" secondAttribute="bottom" constant="2" id="VgX-oL-SGc"/>
                             <constraint firstItem="Roj-sN-yHq" firstAttribute="top" secondItem="eLU-uo-AYr" secondAttribute="bottom" constant="10" id="WYB-NT-WZs"/>
                             <constraint firstItem="cQf-cV-npJ" firstAttribute="top" secondItem="Loa-eT-nwN" secondAttribute="bottom" constant="12" id="Wpx-8Y-tl7"/>
+                            <constraint firstItem="tXO-nJ-T3n" firstAttribute="trailing" secondItem="xFV-fo-xR6" secondAttribute="trailing" id="c5p-Lt-ana"/>
                             <constraint firstItem="Nkq-Xf-7Ee" firstAttribute="trailing" secondItem="tXO-nJ-T3n" secondAttribute="trailing" constant="-10" id="c8K-Db-xd1"/>
+                            <constraint firstItem="xFV-fo-xR6" firstAttribute="top" secondItem="tXO-nJ-T3n" secondAttribute="top" id="eUq-NA-WIB"/>
                             <constraint firstItem="cQf-cV-npJ" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="fCk-Ro-XSf"/>
-                            <constraint firstItem="Roj-sN-yHq" firstAttribute="leading" secondItem="Loa-eT-nwN" secondAttribute="trailing" constant="20" id="ge8-Fs-Ean"/>
+                            <constraint firstItem="Roj-sN-yHq" firstAttribute="leading" secondItem="Loa-eT-nwN" secondAttribute="trailing" constant="5" id="ge8-Fs-Ean"/>
                             <constraint firstItem="Loa-eT-nwN" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="gkR-YA-nUA"/>
                             <constraint firstItem="JV5-bX-lpH" firstAttribute="top" secondItem="cQf-cV-npJ" secondAttribute="bottom" constant="10" id="mbU-B9-GdV"/>
                             <constraint firstItem="JV5-bX-lpH" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="xWS-iM-BhH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tXO-nJ-T3n"/>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="xFV-fo-xR6" id="BPS-74-HvV"/>
+                        <outlet property="movieOverview" destination="Nkq-Xf-7Ee" id="JL7-oI-Drx"/>
+                        <outlet property="moviePoster" destination="eLU-uo-AYr" id="Pkt-jR-qgQ"/>
+                        <outlet property="movieRate" destination="wal-ez-yWM" id="wDA-fP-LGv"/>
+                        <outlet property="movieRateAndGeners" destination="cQf-cV-npJ" id="JxY-mr-egL"/>
+                        <outlet property="movieReviewers" destination="cgh-5R-44e" id="Klx-D6-xxG"/>
+                        <outlet property="movieTitle" destination="Loa-eT-nwN" id="S8X-oT-8c1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccl-zk-Gni" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

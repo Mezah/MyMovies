@@ -43,28 +43,54 @@ enum MovieData
             var runTime:Int? = 0
             var geners:[Gener] = [Gener]()
             
-            var rate:String {
-                get {
-                    return "\(String(describing:movieRate))/\(10)"
-                }
-            }
-            func loadRuntimeAndGeners() ->String {
-                var title = ""
-                
-                for (index,gener) in geners.enumerated() {
-                    title.append(contentsOf: gener.name!)
-                    if index < geners.count {
-                        title.append(contentsOf: " | ")
-                    }
-                }
-                print(title)
-                return "\(String(describing: runTime)) min" + title
-                
-            }
-            
         }
     }
     struct ViewModel{
+        var movieDetails:MovieData.MovieInformation.MovieDetails
         
+        init(_ movieDetails:MovieData.MovieInformation.MovieDetails) {
+            self.movieDetails = movieDetails
+        }
+        
+        var movieTitle:String {
+            get {
+                return movieDetails.title ?? ""
+            }
+        }
+        
+        var movieOverView:String {
+            get {
+                return movieDetails.overView ?? ""
+            }
+        }
+        
+        var movieReviewers :String {
+            get {
+                return "\(String(describing:movieDetails.voteCount!))"
+            }
+        }
+        var postUrl:URL? {
+            get {
+                return URL(string: movieDetails.backdropPath! )
+            }
+        }
+        var rate:String {
+            get {
+                return "\(String(describing:movieDetails.movieRate!))/\(10)"
+            }
+        }
+        var runtimeAndGeners: String {
+            var title = ""
+            
+            for (index,gener) in movieDetails.geners.enumerated() {
+                title.append(contentsOf: gener.name!)
+                if index < movieDetails.geners.count {
+                    title.append(contentsOf: " | ")
+                }
+            }
+            print(title)
+            return "\(String(describing: movieDetails.runTime)) min" + title
+            
+        }
     }
 }

@@ -12,15 +12,9 @@
 
 import UIKit
 
-protocol DiscoverPresentationLogic
+protocol DiscoverPresentationLogic : MainPresenter
 {
     func presentMoviesList(_ movies:[Discover.DiscoverMovies.Movie])
-    
-    func presentError()
-    
-    func presentNoInternetMessege()
-    
-    func presentLoadingState(_ state:Bool)
 }
 
 class DiscoverPresenter: DiscoverPresentationLogic
@@ -38,7 +32,7 @@ class DiscoverPresenter: DiscoverPresentationLogic
     }
     
     func presentError() {
-        
+        viewController?.displayError()
     }
     
     func presentNoInternetMessege() {

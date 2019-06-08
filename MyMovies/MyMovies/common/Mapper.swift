@@ -37,6 +37,7 @@ func convertMovieDetails(details apiMovieDetails:MovieDetailedMDB) -> MovieData.
     
     var movieDetails = MovieData.MovieInformation.MovieDetails()
     movieDetails.id = apiMovieDetails.id
+    movieDetails.title = apiMovieDetails.title
     movieDetails.overView = apiMovieDetails.overview
     movieDetails.movieRate = apiMovieDetails.vote_average
     movieDetails.voteCount = apiMovieDetails.vote_count

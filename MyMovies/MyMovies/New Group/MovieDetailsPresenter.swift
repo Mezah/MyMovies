@@ -12,20 +12,33 @@
 
 import UIKit
 
-protocol MovieDetailsPresentationLogic
-{
+protocol MovieDetailsPresentationLogic: MainPresenter {
   func presentMovieDetails(movieDetails details:MovieData.MovieInformation.MovieDetails)
 }
 
 class MovieDetailsPresenter: MovieDetailsPresentationLogic
 {
+    
+    
   weak var viewController: MovieDetailsDisplayLogic?
   
-  // MARK: Do something
+  // MARK: Load Movie Details
   
   func presentMovieDetails(movieDetails details:MovieData.MovieInformation.MovieDetails)
   {
-    let viewModel = MovieData.ViewModel()
+    let viewModel = MovieData.ViewModel(details)
     viewController?.displatMovieInformation(viewModel: viewModel)
   }
+    
+    func presentError() {
+        viewController?.displayError()
+    }
+    
+    func presentNoInternetMessege() {
+        viewController?.displayNoInternet()
+    }
+    
+    func presentLoadingState(_ state: Bool) {
+        viewController?.displayLoading(state)
+    }
 }

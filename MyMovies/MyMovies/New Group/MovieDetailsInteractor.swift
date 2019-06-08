@@ -12,6 +12,12 @@
 
 import UIKit
 
+protocol MovieDetailsResponse :class {
+    func showMovieDetails(_ movieDetails:MovieData.MovieInformation.MovieDetails)
+    func showError()
+}
+
+
 protocol MovieDetailsBusinessLogic
 {
   func loadMovieDetails(request: MovieData.MovieInformation.Request)
@@ -22,8 +28,9 @@ protocol MovieDetailsDataStore
   var movieId: Int { get set }
 }
 
-class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore
+class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore, MovieDetailsResponse
 {
+
     var movieId: Int = 0
     
   var presenter: MovieDetailsPresentationLogic?
@@ -35,9 +42,17 @@ class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore
   func loadMovieDetails(request: MovieData.MovieInformation.Request)
   {
     worker = MovieDetailsWorker()
-    worker?.loadMovieDetails(movieId)
-    
-//    let response = MovieDetails.MovieInformation.Response()
-//    presenter?.presentMovieDetails(r)
+    presenter?.presentLoadingState(true)
+    worker?.loadMovieDetails(movieId,self)
   }
+    
+    func showMovieDetails(_ movieDetails: MovieData.MovieInformation.MovieDetails) {
+        presenter?.presentLoadingState(false)
+        presenter?.presentMovieDetails(movieDetails: movieDetails)
+    }
+    
+    func showError() {
+        presenter?.presentLoadingState(false)
+        presenter?.presentError()
+    }
 }

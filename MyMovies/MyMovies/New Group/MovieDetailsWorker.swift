@@ -15,23 +15,19 @@ import TMDBSwift
 
 class MovieDetailsWorker
 {
-    func loadMovieDetails(_ movieId:Int)
+    func loadMovieDetails(_ movieId:Int,_ response: MovieDetailsResponse)
     {
         MovieMDB.movie(movieID: movieId, completion: ({ (clientReturn, movieInfo) in
             if let error = clientReturn.error {
                 // handle error
                 print(error.localizedDescription)
-            
+                response.showError()
                 return
             }
-            print(movieInfo?.budget)
-            print(movieInfo?.homepage)
-            print(movieInfo?.tagline)
-            print(movieInfo?.runtime)
-            print(movieInfo?.original_title)
-            print(movieInfo?.overview)
-            print(movieInfo?.vote_average)
-            print(movieInfo?.popularity)
+            if let details = movieInfo {
+                let appMovieDetails = convertMovieDetails(details: details)
+                response.showMovieDetails(appMovieDetails)
+            }
             
         }))
     }

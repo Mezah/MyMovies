@@ -13,11 +13,10 @@
 import UIKit
 import Kingfisher
 
-protocol DiscoverDisplayLogic: class
+protocol DiscoverDisplayLogic: MainDisplayLogic
 {
     func displayMovies(viewModel: Discover.DiscoverMovies.ViewModel)
-    func displayNoInternet()
-    func displayLoading(_ show:Bool)
+   
 }
 
 class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource, DiscoverDisplayLogic{
@@ -110,6 +109,9 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
         
     }
     
+    func displayError() {
+        // TODO show Errors
+    }
     // MARK: CollectionViewController protocol
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

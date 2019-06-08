@@ -12,12 +12,25 @@
 
 import UIKit
 
-protocol MovieDetailsDisplayLogic: class
+protocol MovieDetailsDisplayLogic: MainDisplayLogic
 {
     func displatMovieInformation(viewModel: MovieData.ViewModel)
 }
 
 class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
+    
+    
+    @IBOutlet weak var moviePoster: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var movieTitle: UILabel!
+    
+    @IBOutlet weak var movieRate: UILabel!
+    
+    @IBOutlet weak var movieReviewers: UILabel!
+    @IBOutlet weak var movieRateAndGeners: UILabel!
+    
+    @IBOutlet weak var movieOverview: UILabel!
     
     private var movieDetails:MovieData.MovieInformation.MovieDetails? = nil
     var movieId:Int!
@@ -85,6 +98,25 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
     }
     
     func displatMovieInformation(viewModel: MovieData.ViewModel){
+        self.moviePoster.kf.indicatorType = .activity
+        self.moviePoster.kf.setImage(with: viewModel.postUrl)
+        self.movieTitle.text = viewModel.movieTitle
+        self.movieRate.text = viewModel.rate
+        self.movieReviewers.text = viewModel.movieReviewers
+        self.movieOverview.text = viewModel.movieOverView
         
     }
+    
+    func displayNoInternet() {
+        
+    }
+    
+    func displayLoading(_ show: Bool) {
+         activityIndicator.isHidden = !show
+    }
+    
+    func displayError() {
+        
+    }
+    
 }
