@@ -14,12 +14,13 @@ import UIKit
 
 protocol DiscoverBusinessLogic
 {
-  func loadPopularMovies()
+    func loadPopularMovies()
+    func loadRecentMovies()
 }
 
 protocol DiscoverDataStore
 {
-  //var name: String { get set }
+    //var name: String { get set }
 }
 protocol DiscoverResponse :class {
     func showMoviesList(moviesList:[Discover.DiscoverMovies.Movie])
@@ -29,20 +30,24 @@ protocol DiscoverResponse :class {
 class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore,DiscoverResponse
 {
    
+    var presenter: DiscoverPresentationLogic?
+    var worker: DiscoverWorker? = DiscoverWorker()
+    //var name: String = ""
     
-  var presenter: DiscoverPresentationLogic?
-  var worker: DiscoverWorker? = DiscoverWorker()
-  //var name: String = ""
-  
-  // MARK: Do something
-  
-  func loadPopularMovies()
-  {
-    // TODO check for internet connection here
-    presenter?.presentLoadingState(true)
-    worker?.fetchPopularMovies(self)
+    // MARK: Do something
     
-  }
+    func loadPopularMovies()
+    {
+        // TODO check for internet connection here
+        presenter?.presentLoadingState(true)
+        worker?.fetchMoviesWith(Discover.DiscoverMovies.Request.Popular,self)
+        
+    }
+    
+    func loadRecentMovies(){
+        presenter?.presentLoadingState(true)
+        worker?.fetchMoviesWith(Discover.DiscoverMovies.Request.Recent,self)
+    }
     
     func showMoviesList(moviesList: [Discover.DiscoverMovies.Movie]) {
         presenter?.presentLoadingState(false)

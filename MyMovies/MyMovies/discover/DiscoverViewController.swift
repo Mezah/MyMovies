@@ -94,12 +94,6 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
     
     func displayMovies(viewModel: Discover.DiscoverMovies.ViewModel)
     {
-        for movie in viewModel.moviesList! {
-            print(movie.id)
-            print(movie.title)
-            print(movie.posterPath)
-            print(movie.backdropPath)
-        }
         self.moviesList = viewModel.moviesList!
         self.moviesCollection.reloadData()
     }
@@ -110,8 +104,8 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
     
     func displayLoading(_ show: Bool) {
         
-    progressIndicator.isHidden = !show
-       
+        progressIndicator.isHidden = !show
+        
     }
     
     // MARK: CollectionViewController protocol
@@ -127,6 +121,7 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
         cell.moviePoster.kf.indicatorType = .activity
         let posterUrl = URL(string: movie.posterPath!)
         cell.moviePoster.kf.setImage(with: posterUrl)
+        cell.movieTitle.text = String(movie.title!)
         return cell
     }
 }

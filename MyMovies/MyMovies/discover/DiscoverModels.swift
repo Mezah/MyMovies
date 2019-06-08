@@ -19,14 +19,15 @@ enum Discover
   
   enum DiscoverMovies
   {
-    struct Request
-    {
+    enum Request{
+       case Popular,Recent
     }
     struct Movie {
-        var id :Int?
+        var id :Int? 
         var title:String?
-        var posterPath:String?
-        var backdropPath:String?
+        var posterPath:String? = ""
+        var backdropPath:String? = ""
+        var movieRate:Double?
         
     }
     struct Response {

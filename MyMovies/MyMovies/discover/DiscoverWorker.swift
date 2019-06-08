@@ -15,9 +15,18 @@ import TMDBSwift
 
 
 class DiscoverWorker {
-    func fetchPopularMovies(_ results:DiscoverResponse)  {
+    func fetchMoviesWith(_ request: Discover.DiscoverMovies.Request,_ results:DiscoverResponse)  {
         
-        DiscoverMDB.discover(discoverType: DiscoverType.movie	, params: [DiscoverParam.sort_by(DiscoverSortByMovie.popularity_desc.rawValue)]) {
+        let params:String
+        
+        switch request {
+        case .Popular:
+            params =  DiscoverSortByMovie.popularity_desc.rawValue
+        case .Recent:
+            params =  DiscoverSortByMovie.release_date_desc.rawValue
+        }
+        
+        DiscoverMDB.discover(discoverType: DiscoverType.movie	, params: [DiscoverParam.sort_by(params)]) {
             (clientReturn, moviesList, TvList) in
             
             if let error = clientReturn.error {

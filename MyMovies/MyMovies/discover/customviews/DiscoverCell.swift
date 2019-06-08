@@ -13,5 +13,6 @@ class DiscoverCell : UICollectionViewCell {
     
     @IBOutlet weak var moviePoster: UIImageView!
     
+    @IBOutlet weak var movieTitle: UILabel!
     
 }
