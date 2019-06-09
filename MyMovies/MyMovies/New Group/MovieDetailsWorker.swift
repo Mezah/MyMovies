@@ -25,12 +25,14 @@ class MovieDetailsWorker{
         let predicate = NSPredicate(format: "id == %@", String(movieId))
         fetchReq.predicate = predicate
         
-        if let movieDetails = try? dataController.viewContext.fetch(fetchReq)[0] {
-            movieDetails.isFavorite = isFavorite
-            try? self.dataController.viewContext.save()
-            completion(true)
-        } else {
-            completion(false)
+        if let movieDetails = try? dataController.viewContext.fetch(fetchReq) {
+            if movieDetails.count > 0 {
+                
+                movieDetails[0].isFavorite = !isFavorite
+                try? self.dataController.viewContext.save()
+                completion(movieDetails[0].isFavorite)
+            }
+            
         }
     }
     

@@ -21,21 +21,23 @@ protocol MovieDetailsResponse :class {
 protocol MovieDetailsBusinessLogic
 {
     func loadMovieDetails(request: MovieData.MovieInformation.Request)
+    func addMovieToFavorite(_ completion: @escaping (_ isFav:Bool) -> ())
 }
 
 protocol MovieDetailsDataStore
 {
     var movieId: Int { get set }
+    var movieDetails: LocalMovieDetails? { get set }
 }
 
-class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore, MovieDetailsResponse
+class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore
 {
     
     var movieId: Int = 0
     
     var presenter: MovieDetailsPresentationLogic?
     var worker: MovieDetailsWorker?
-    
+    var movieDetails:LocalMovieDetails? = nil
     
     // MARK: Do something
     
@@ -56,24 +58,18 @@ class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore, 
             
             if let movieDetails = details {
                 self.presenter?.presentMovieDetails(movieDetails: movieDetails)
+                 self.movieDetails = movieDetails
             }
         }
     }
     
-    func addMovieToFavorite(_ isFavorite:Bool) {
+    func addMovieToFavorite(_ completion: @escaping (_ isFav:Bool) -> ()) {
         presenter?.presentLoadingState(true)
-        worker?.addMovieToFavortie(movieId, isFavorite){
+        worker?.addMovieToFavortie(movieId, (movieDetails?.isFavorite)!){
             (added) in
             self.presenter?.presentLoadingState(false)
+            completion(added)
         }
     }
-    func showMovieDetails(_ movieDetails: LocalMovieDetails) {
-        presenter?.presentLoadingState(false)
-        presenter?.presentMovieDetails(movieDetails: movieDetails)
-    }
-    
-    func showError() {
-        presenter?.presentLoadingState(false)
-        presenter?.presentError()
-    }
+   
 }

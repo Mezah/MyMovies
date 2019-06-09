@@ -32,6 +32,9 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
     
     @IBOutlet weak var movieOverview: UILabel!
     
+    
+    @IBOutlet weak var favButton: UIButton!
+    
     var movieId:Int!
     
     var interactor: MovieDetailsBusinessLogic?
@@ -89,7 +92,18 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
     
     // MARK: Load Movie Details
     
-    //@IBOutlet weak var nameTextField: UITextField!
+    
+    @IBAction func addToFav(_ sender: UIButton) {
+        interactor?.addMovieToFavorite {
+           state in
+            if state {
+                self.favButton.setImage(UIImage(named: "baseline_favorite_black_48pt_1x"), for: .normal)
+            } else {
+                self.favButton.setImage(UIImage(named: "outline_favorite_border_black_48pt_1x"), for: .normal)
+            }
+        }
+    }
+   
     
     func loadMovieDetails(){
         let request = MovieData.MovieInformation.Request()
@@ -104,6 +118,11 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
         self.movieReviewers.text = viewModel.movieReviewers
         self.movieOverview.text = viewModel.movieOverView
         // TODO set navigation bar title
+        if viewModel.isFavorite {
+            favButton.setImage(UIImage(named: "baseline_favorite_black_48pt_1x.png"), for: .normal)
+        } else {
+           favButton.setImage(UIImage(named: "outline_favorite_border_black_48pt_1x.png"), for: .normal)
+        }
     }
     
     func displayNoInternet() {

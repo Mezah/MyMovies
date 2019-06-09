@@ -48,6 +48,11 @@ enum MovieData
     struct ViewModel{
         var movieDetails:LocalMovieDetails
         
+        var isFavorite :Bool {
+            get {
+                return movieDetails.isFavorite
+            }
+        }
         init(_ movieDetails:LocalMovieDetails) {
             self.movieDetails = movieDetails
         }

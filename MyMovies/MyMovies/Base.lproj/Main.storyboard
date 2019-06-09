@@ -105,9 +105,12 @@
                                     <constraint firstAttribute="height" constant="39.5" id="Z7d-nq-ks2"/>
                                 </constraints>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="outline_favorite_border_black_48pt_1x" translatesAutoresizingMaskIntoConstraints="NO" id="i6M-Kc-Fv5">
-                                <rect key="frame" x="269.5" y="314" width="48" height="48"/>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyd-9r-Tgc">
+                                <rect key="frame" x="270" y="314" width="30" height="34"/>
+                                <connections>
+                                    <action selector="addToFav:" destination="SYH-rY-TTa" eventType="touchUpInside" id="LCn-Og-AH9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -120,30 +123,30 @@
                             <constraint firstItem="tXO-nJ-T3n" firstAttribute="trailing" secondItem="Roj-sN-yHq" secondAttribute="trailing" constant="10" id="CkT-1A-jQw"/>
                             <constraint firstItem="tXO-nJ-T3n" firstAttribute="bottom" secondItem="xFV-fo-xR6" secondAttribute="bottom" id="FAq-66-CWP"/>
                             <constraint firstItem="tXO-nJ-T3n" firstAttribute="trailing" secondItem="eLU-uo-AYr" secondAttribute="trailing" id="FGy-8Q-uPE"/>
-                            <constraint firstItem="Roj-sN-yHq" firstAttribute="leading" secondItem="i6M-Kc-Fv5" secondAttribute="trailing" constant="-48" id="G7a-cS-JoL"/>
-                            <constraint firstItem="Roj-sN-yHq" firstAttribute="leading" secondItem="i6M-Kc-Fv5" secondAttribute="leading" id="IjY-Gy-wO3"/>
                             <constraint firstItem="Loa-eT-nwN" firstAttribute="top" secondItem="eLU-uo-AYr" secondAttribute="bottom" constant="10" id="J7Q-hW-e7t"/>
+                            <constraint firstItem="qyd-9r-Tgc" firstAttribute="leading" secondItem="NnK-LK-9Fv" secondAttribute="trailing" constant="148" id="Jnf-Co-HlD"/>
                             <constraint firstItem="NnK-LK-9Fv" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="JyZ-Dx-n0a"/>
                             <constraint firstItem="cQf-cV-npJ" firstAttribute="leading" secondItem="JV5-bX-lpH" secondAttribute="trailing" constant="-88" id="Mpo-cX-b0W"/>
                             <constraint firstItem="Roj-sN-yHq" firstAttribute="bottom" secondItem="Loa-eT-nwN" secondAttribute="bottom" id="Rbu-uu-aX3"/>
                             <constraint firstItem="NnK-LK-9Fv" firstAttribute="top" secondItem="JV5-bX-lpH" secondAttribute="bottom" constant="2" id="VgX-oL-SGc"/>
                             <constraint firstItem="Roj-sN-yHq" firstAttribute="top" secondItem="eLU-uo-AYr" secondAttribute="bottom" constant="10" id="WYB-NT-WZs"/>
                             <constraint firstItem="cQf-cV-npJ" firstAttribute="top" secondItem="Loa-eT-nwN" secondAttribute="bottom" constant="12" id="Wpx-8Y-tl7"/>
-                            <constraint firstItem="i6M-Kc-Fv5" firstAttribute="leading" secondItem="xFV-fo-xR6" secondAttribute="trailing" constant="-105.5" id="WrA-5g-ag1"/>
                             <constraint firstItem="tXO-nJ-T3n" firstAttribute="trailing" secondItem="xFV-fo-xR6" secondAttribute="trailing" id="c5p-Lt-ana"/>
                             <constraint firstItem="Nkq-Xf-7Ee" firstAttribute="trailing" secondItem="tXO-nJ-T3n" secondAttribute="trailing" constant="-10" id="c8K-Db-xd1"/>
                             <constraint firstItem="xFV-fo-xR6" firstAttribute="top" secondItem="tXO-nJ-T3n" secondAttribute="top" id="eUq-NA-WIB"/>
                             <constraint firstItem="cQf-cV-npJ" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="fCk-Ro-XSf"/>
-                            <constraint firstItem="i6M-Kc-Fv5" firstAttribute="top" secondItem="Roj-sN-yHq" secondAttribute="bottom" constant="50.5" id="fVF-xt-lBw"/>
                             <constraint firstItem="Roj-sN-yHq" firstAttribute="leading" secondItem="Loa-eT-nwN" secondAttribute="trailing" constant="5" id="ge8-Fs-Ean"/>
                             <constraint firstItem="Loa-eT-nwN" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="gkR-YA-nUA"/>
                             <constraint firstItem="JV5-bX-lpH" firstAttribute="top" secondItem="cQf-cV-npJ" secondAttribute="bottom" constant="10" id="mbU-B9-GdV"/>
+                            <constraint firstItem="qyd-9r-Tgc" firstAttribute="top" secondItem="xp9-LP-a0V" secondAttribute="bottom" constant="50.5" id="wMv-a3-ezn"/>
+                            <constraint firstItem="qyd-9r-Tgc" firstAttribute="leading" secondItem="xFV-fo-xR6" secondAttribute="trailing" constant="-105" id="x2P-fn-qPH"/>
                             <constraint firstItem="JV5-bX-lpH" firstAttribute="leading" secondItem="tXO-nJ-T3n" secondAttribute="leading" constant="5" id="xWS-iM-BhH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tXO-nJ-T3n"/>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="xFV-fo-xR6" id="BPS-74-HvV"/>
+                        <outlet property="favButton" destination="qyd-9r-Tgc" id="4oK-K4-UPb"/>
                         <outlet property="movieOverview" destination="Nkq-Xf-7Ee" id="JL7-oI-Drx"/>
                         <outlet property="moviePoster" destination="eLU-uo-AYr" id="Pkt-jR-qgQ"/>
                         <outlet property="movieRate" destination="wal-ez-yWM" id="wDA-fP-LGv"/>
@@ -296,6 +299,5 @@
     <resources>
         <image name="baseline_favorite_black_48pt_1x" width="48" height="48"/>
         <image name="baseline_grade_black_24pt_2x" width="48" height="48"/>
-        <image name="outline_favorite_border_black_48pt_1x" width="48" height="48"/>
     </resources>
 </document>
