@@ -22,7 +22,7 @@ class DiscoverPresenter: DiscoverPresentationLogic
    
     weak var viewController: DiscoverDisplayLogic?
     
-    // MARK: Present Movies list
+    // MARK:- Present Movies list
     
     func presentMoviesList(_ movies:[LocalMovie])
     {

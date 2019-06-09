@@ -46,9 +46,9 @@ enum MovieData
         }
     }
     struct ViewModel{
-        var movieDetails:MovieData.MovieInformation.MovieDetails
+        var movieDetails:LocalMovieDetails
         
-        init(_ movieDetails:MovieData.MovieInformation.MovieDetails) {
+        init(_ movieDetails:LocalMovieDetails) {
             self.movieDetails = movieDetails
         }
         
@@ -66,30 +66,30 @@ enum MovieData
         
         var movieReviewers :String {
             get {
-                return "\(String(describing:movieDetails.voteCount!))"
+                return "\(String(describing:movieDetails.voteCount))"
             }
         }
         var postUrl:URL? {
             get {
-                return URL(string: movieDetails.backdropPath! )
+                return URL(string: movieDetails.backdropImage! )
             }
         }
         var rate:String {
             get {
-                return "\(String(describing:movieDetails.movieRate!))/\(10)"
+                return "\(String(describing:movieDetails.movieRate))/\(10)"
             }
         }
         var runtimeAndGeners: String {
             var title = ""
             
-            for (index,gener) in movieDetails.geners.enumerated() {
-                title.append(contentsOf: gener.name!)
-                if index < movieDetails.geners.count {
+            for (index,gener) in movieDetails.geners!.enumerated() {
+                title.append(contentsOf: (gener as AnyObject).name!)
+                if index < (movieDetails.geners?.count)! {
                     title.append(contentsOf: " | ")
                 }
             }
             print(title)
-            return "\(String(describing: movieDetails.runTime)) min" + title
+            return "\(movieDetails.runtime) min" + title
             
         }
     }

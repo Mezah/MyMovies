@@ -13,40 +13,61 @@
 import UIKit
 
 protocol MovieDetailsResponse :class {
-    func showMovieDetails(_ movieDetails:MovieData.MovieInformation.MovieDetails)
+    func showMovieDetails(_ movieDetails:LocalMovieDetails)
     func showError()
 }
 
 
 protocol MovieDetailsBusinessLogic
 {
-  func loadMovieDetails(request: MovieData.MovieInformation.Request)
+    func loadMovieDetails(request: MovieData.MovieInformation.Request)
 }
 
 protocol MovieDetailsDataStore
 {
-  var movieId: Int { get set }
+    var movieId: Int { get set }
 }
 
 class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore, MovieDetailsResponse
 {
-
+    
     var movieId: Int = 0
     
-  var presenter: MovieDetailsPresentationLogic?
-  var worker: MovieDetailsWorker?
-  
-  
-  // MARK: Do something
-  
-  func loadMovieDetails(request: MovieData.MovieInformation.Request)
-  {
-    worker = MovieDetailsWorker()
-    presenter?.presentLoadingState(true)
-    worker?.loadMovieDetails(movieId,self)
-  }
+    var presenter: MovieDetailsPresentationLogic?
+    var worker: MovieDetailsWorker?
     
-    func showMovieDetails(_ movieDetails: MovieData.MovieInformation.MovieDetails) {
+    
+    // MARK: Do something
+    
+    func loadMovieDetails(request: MovieData.MovieInformation.Request)
+    {
+        worker = MovieDetailsWorker()
+        presenter?.presentLoadingState(true)
+        
+        worker?.loadMovieDetails(movieId){
+            (details,error) in
+            
+            self.presenter?.presentLoadingState(false)
+            
+            if error {
+                self.presenter?.presentError()
+                return
+            }
+            
+            if let movieDetails = details {
+                self.presenter?.presentMovieDetails(movieDetails: movieDetails)
+            }
+        }
+    }
+    
+    func addMovieToFavorite(_ isFavorite:Bool) {
+        presenter?.presentLoadingState(true)
+        worker?.addMovieToFavortie(movieId, isFavorite){
+            (added) in
+            self.presenter?.presentLoadingState(false)
+        }
+    }
+    func showMovieDetails(_ movieDetails: LocalMovieDetails) {
         presenter?.presentLoadingState(false)
         presenter?.presentMovieDetails(movieDetails: movieDetails)
     }

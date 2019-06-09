@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MovieDetailsPresentationLogic: MainPresenter {
-  func presentMovieDetails(movieDetails details:MovieData.MovieInformation.MovieDetails)
+  func presentMovieDetails(movieDetails details:LocalMovieDetails)
 }
 
 class MovieDetailsPresenter: MovieDetailsPresentationLogic
@@ -24,7 +24,7 @@ class MovieDetailsPresenter: MovieDetailsPresentationLogic
   
   // MARK: Load Movie Details
   
-  func presentMovieDetails(movieDetails details:MovieData.MovieInformation.MovieDetails)
+  func presentMovieDetails(movieDetails details:LocalMovieDetails)
   {
     let viewModel = MovieData.ViewModel(details)
     viewController?.displatMovieInformation(viewModel: viewModel)

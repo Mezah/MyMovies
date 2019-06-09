@@ -12,23 +12,90 @@
 
 import UIKit
 import TMDBSwift
+import CoreData
 
-class MovieDetailsWorker
-{
-    func loadMovieDetails(_ movieId:Int,_ response: MovieDetailsResponse)
+
+class MovieDetailsWorker{
+    
+    private var dataController = DataController.shared
+    
+    func addMovieToFavortie(_ movieId:Int,_ isFavorite:Bool,completion: @escaping (_ added:Bool) -> ()) {
+        
+        let fetchReq : NSFetchRequest<LocalMovieDetails> = LocalMovieDetails.fetchRequest()
+        let predicate = NSPredicate(format: "id == %@", String(movieId))
+        fetchReq.predicate = predicate
+        
+        if let movieDetails = try? dataController.viewContext.fetch(fetchReq)[0] {
+            movieDetails.isFavorite = isFavorite
+            try? self.dataController.viewContext.save()
+            completion(true)
+        } else {
+            completion(false)
+        }
+    }
+    
+    func loadMovieDetails(_ movieId:Int,_ completion : @escaping (_ details:LocalMovieDetails?,_ error :Bool) ->())
     {
+        // fetch data locally first if not found call api
+        let fetchReq : NSFetchRequest<LocalMovieDetails> = LocalMovieDetails.fetchRequest()
+        let detailsPredicate = NSPredicate(format: "id == %@", String(movieId))
+                fetchReq.predicate = detailsPredicate
+        //        fetchReq.fetchLimit = 1
+        
+        let movieFetchRequest :NSFetchRequest<LocalMovie> = LocalMovie.fetchRequest()
+        let predicate = NSPredicate(format: "id == %@", String(movieId))
+        movieFetchRequest.predicate = predicate
+        
+        if let movieDetails = try? dataController.viewContext.fetch(fetchReq) {
+            if movieDetails.count > 0 {
+                completion(movieDetails[0],false)
+                return
+            }
+        }
+        
         MovieMDB.movie(movieID: movieId, completion: ({ (clientReturn, movieInfo) in
             if let error = clientReturn.error {
                 // handle error
                 print(error.localizedDescription)
-                response.showError()
+                
+                completion(nil,true)
                 return
             }
+            let localMovieDetails = LocalMovieDetails(context: self.dataController.viewContext)
+            
             if let details = movieInfo {
                 let appMovieDetails = convertMovieDetails(details: details)
-                response.showMovieDetails(appMovieDetails)
+                
+                localMovieDetails.id = String(describing: appMovieDetails.id!)
+                localMovieDetails.isFavorite = false
+                localMovieDetails.backdropImage = appMovieDetails.backdropPath
+                localMovieDetails.posterImage = appMovieDetails.posterPath
+                localMovieDetails.runtime = String(describing: appMovieDetails.runTime)
+                localMovieDetails.overView = appMovieDetails.overView
+                localMovieDetails.voteCount = appMovieDetails.voteCount ?? 0.0
+                localMovieDetails.title = appMovieDetails.title
+                localMovieDetails.movieRate = appMovieDetails.movieRate ?? 0.0
+                
+                for gener in appMovieDetails.geners {
+                    let movieGener = MovieGener(context: self.dataController.viewContext)
+                    movieGener.id = String(describing: gener.id)
+                    movieGener.name = gener.name
+                    movieGener.movie = localMovieDetails
+                    //                            try? self.dataController.viewContext.save()
+                    localMovieDetails.addToGeners(movieGener)
+                }
+                if let lm = try? self.dataController.viewContext.fetch(movieFetchRequest) {
+                    if lm.count > 0 {
+                        localMovieDetails.localMovie = lm[0]
+                        lm[0].detail = localMovieDetails
+                    }
+                }
             }
-            
+            try? self.dataController.viewContext.save()
+            completion(localMovieDetails,false)
         }))
+        
     }
+    
+    
 }

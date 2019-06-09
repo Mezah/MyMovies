@@ -32,7 +32,6 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
     
     @IBOutlet weak var movieOverview: UILabel!
     
-    private var movieDetails:MovieData.MovieInformation.MovieDetails? = nil
     var movieId:Int!
     
     var interactor: MovieDetailsBusinessLogic?
