@@ -14,28 +14,38 @@ import UIKit
 
 protocol FavoriteBusinessLogic
 {
-  func doSomething(request: Favorite.Something.Request)
+  func loadFavoriteMovies(request: Favorite.Something.Request)
 }
 
 protocol FavoriteDataStore
 {
-  //var name: String { get set }
+var moviesList: [LocalMovieDetails] { get set }
+    
 }
 
 class FavoriteInteractor: FavoriteBusinessLogic, FavoriteDataStore
 {
+    var moviesList: [LocalMovieDetails] = [LocalMovieDetails]()
+    
   var presenter: FavoritePresentationLogic?
   var worker: FavoriteWorker?
-  //var name: String = ""
   
-  // MARK: Do something
-  
-  func doSomething(request: Favorite.Something.Request)
+  func loadFavoriteMovies(request: Favorite.Something.Request)
   {
     worker = FavoriteWorker()
-    worker?.doSomeWork()
+    presenter?.presentLoadingState(true)
+    worker?.loadFavoriteMovies {
+        movies,error in
+        self.presenter?.presentLoadingState(false)
+        if let error = error {
+            self.presenter?.presentError()
+            return
+        }
+        let response = Favorite.Something.Response(movies)
     
-    let response = Favorite.Something.Response()
-    presenter?.presentSomething(response: response)
+        self.presenter?.presentFavoriteList(response: response)
+        
+    }
+
   }
 }

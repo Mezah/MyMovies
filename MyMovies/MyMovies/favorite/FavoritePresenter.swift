@@ -12,20 +12,34 @@
 
 import UIKit
 
-protocol FavoritePresentationLogic
+protocol FavoritePresentationLogic:MainPresenter
 {
-  func presentSomething(response: Favorite.Something.Response)
+  func presentFavoriteList(response: Favorite.Something.Response)
 }
 
 class FavoritePresenter: FavoritePresentationLogic
 {
+    func presentError() {
+       viewController?.displayError()
+    }
+    
+    func presentNoInternetMessege() {
+        viewController?.displayNoInternet()
+    }
+    
+    func presentLoadingState(_ state: Bool) {
+        viewController?.displayLoading(state)
+    }
+    
+    // MARK:- Load favorited
+    func presentFavoriteList(response: Favorite.Something.Response) {
+        var viewModel = Favorite.Something.ViewModel()
+        viewModel.moviesList = response.moviesList
+        viewController?.displayFavoriteMovies(viewModel: viewModel)
+    }
+    
   weak var viewController: FavoriteDisplayLogic?
   
-  // MARK: Do something
   
-  func presentSomething(response: Favorite.Something.Response)
-  {
-    let viewModel = Favorite.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
-  }
+
 }

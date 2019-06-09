@@ -11,10 +11,26 @@
 //
 
 import UIKit
+import CoreData
 
 class FavoriteWorker
 {
-  func doSomeWork()
-  {
+
+    private let dataController = DataController.shared
+    
+    func loadFavoriteMovies(_ completion :@escaping (_ list :[LocalMovieDetails],_ error:String?) -> ()){
+        let fetchReq : NSFetchRequest<LocalMovieDetails> = LocalMovieDetails.fetchRequest()
+        let predicate = NSPredicate(format: "isFavorite == %@", String(describing: true))
+
+        fetchReq.predicate = predicate
+        
+        if let movieDetails = try? dataController.viewContext.fetch(fetchReq) {
+            if movieDetails.count > 0 {
+                
+                completion(movieDetails,nil)
+            }
+        } else {
+            completion([LocalMovieDetails](),"")
+        }
   }
 }

@@ -23,9 +23,15 @@ enum Favorite
     }
     struct Response
     {
+        var moviesList : [LocalMovieDetails]
+        
+        init(_ list:[LocalMovieDetails]) {
+            self.moviesList = list
+        }
     }
     struct ViewModel
     {
+        var moviesList : [LocalMovieDetails]?
     }
   }
 }
