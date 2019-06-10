@@ -12,6 +12,7 @@
 
 import UIKit
 import Kingfisher
+import PKHUD
 
 protocol DiscoverDisplayLogic: MainDisplayLogic
 {
@@ -105,8 +106,13 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
     
     func displayLoading(_ show: Bool) {
         
-        progressIndicator.isHidden = !show
-        
+        if show {
+            HUD.dimsBackground = true
+            HUD.show(HUDContentType.progress)
+        } else {
+            HUD.dimsBackground = false
+            HUD.flash(.success)
+        }
     }
     
     func displayError() {

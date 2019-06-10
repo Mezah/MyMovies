@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import PKHUD
 
 protocol MovieDetailsDisplayLogic: MainDisplayLogic
 {
@@ -21,7 +22,6 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
     
     
     @IBOutlet weak var moviePoster: UIImageView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var movieTitle: UILabel!
     
@@ -130,7 +130,14 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
     }
     
     func displayLoading(_ show: Bool) {
-         activityIndicator.isHidden = !show
+        if show {
+            HUD.dimsBackground = true
+            HUD.show(HUDContentType.progress)
+        } else {
+            HUD.dimsBackground = true
+            HUD.flash(.success, delay: 1.0)
+        }
+        
     }
     
     func displayError() {

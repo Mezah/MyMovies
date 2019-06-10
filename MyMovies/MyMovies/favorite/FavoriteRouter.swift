@@ -14,7 +14,7 @@ import UIKit
 
 @objc protocol FavoriteRoutingLogic
 {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+  func routeToMovieDetails(segue: UIStoryboardSegue?)
 }
 
 protocol FavoriteDataPassing
@@ -27,34 +27,41 @@ class FavoriteRouter: NSObject, FavoriteRoutingLogic, FavoriteDataPassing
   weak var viewController: FavoriteViewController?
   var dataStore: FavoriteDataStore?
   
-  // MARK: Routing
+  // MARK: Routing to details
   
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
-
-  // MARK: Navigation
-  
-  //func navigateToSomewhere(source: FavoriteViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
-  // MARK: Passing data
-  
-  //func passDataToSomewhere(source: FavoriteDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+    func routeToMovieDetails(segue: UIStoryboardSegue?)
+    {
+        if let segue = segue {
+            let destinationVC = segue.destination as! MovieDetailsViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToMovieDetails(source: dataStore!, destination: &destinationDS)
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let destinationVC = storyboard.instantiateViewController(withIdentifier: "MovieDetails") as! MovieDetailsViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            
+            passDataToMovieDetails(source: dataStore!, destination: &destinationDS)
+            navigateToMovieDetails(source: viewController!, destination: destinationVC)
+        }
+    }
+    
+    //MARK: Navigation
+    
+    func navigateToMovieDetails(source: FavoriteViewController, destination: MovieDetailsViewController)
+    {
+        source.show(destination, sender: nil)
+    }
+    
+    //MARK: Passing data
+    
+    func passDataToMovieDetails(source: FavoriteDataStore, destination: inout MovieDetailsDataStore)
+    {
+        
+        let selectedRow = viewController?.selectedCellIndex
+        if let row = selectedRow {
+            let movieId = source.moviesList[row].id!
+            destination.movieId = Int(movieId) ?? 0
+            
+        }
+    }
 }

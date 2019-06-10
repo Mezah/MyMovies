@@ -15,6 +15,7 @@ import UIKit
 protocol FavoritePresentationLogic:MainPresenter
 {
   func presentFavoriteList(response: Favorite.Something.Response)
+
 }
 
 class FavoritePresenter: FavoritePresentationLogic

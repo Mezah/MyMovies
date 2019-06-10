@@ -18,9 +18,24 @@ class FavoriteWorker
 
     private let dataController = DataController.shared
     
+    func removeMovieFromFavortie(_ movieId:String,_ completion:@escaping (()->())) {
+        
+        let fetchReq : NSFetchRequest<LocalMovieDetails> = LocalMovieDetails.fetchRequest()
+        let predicate = NSPredicate(format: "id == %@", movieId)
+        fetchReq.predicate = predicate
+        if let movieDetails = try? dataController.viewContext.fetch(fetchReq) {
+            if movieDetails.count > 0 {
+                movieDetails[0].isFavorite = false
+                try? self.dataController.viewContext.save()
+            }
+            
+        }
+        completion()
+    }
+    
     func loadFavoriteMovies(_ completion :@escaping (_ list :[LocalMovieDetails],_ error:String?) -> ()){
         let fetchReq : NSFetchRequest<LocalMovieDetails> = LocalMovieDetails.fetchRequest()
-        let predicate = NSPredicate(format: "isFavorite == %@", String(describing: true))
+        let predicate = NSPredicate(format: "isFavorite == %@", NSNumber(booleanLiteral: true))
 
         fetchReq.predicate = predicate
         
@@ -28,6 +43,8 @@ class FavoriteWorker
             if movieDetails.count > 0 {
                 
                 completion(movieDetails,nil)
+            }else {
+                completion([LocalMovieDetails](),nil)
             }
         } else {
             completion([LocalMovieDetails](),"")

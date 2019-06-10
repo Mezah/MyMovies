@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import PKHUD
 
 protocol FavoriteDisplayLogic: MainDisplayLogic{
     func displayFavoriteMovies(viewModel: Favorite.Something.ViewModel)
@@ -25,6 +26,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic,UICollectio
     private var moviesList : [LocalMovieDetails] = [LocalMovieDetails]()
     var interactor: FavoriteBusinessLogic?
     var router: (NSObjectProtocol & FavoriteRoutingLogic & FavoriteDataPassing)?
+    var selectedCellIndex :Int = -1
     
     // MARK: Object lifecycle
     
@@ -60,6 +62,8 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic,UICollectio
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
+        let sender = sender as! FavoriteCell
+        selectedCellIndex = moviesCollection?.indexPath(for: sender)?.row ?? -1
         if let scene = segue.identifier {
             let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
             if let router = router, router.responds(to: selector) {
@@ -70,15 +74,11 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic,UICollectio
     
     // MARK: View lifecycle
     
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadFavorites()
     }
-    
-    // MARK: Do something
-    
-    //@IBOutlet weak var nameTextField: UITextField!
+    // MARK: Do Loadind favorite
     
     func loadFavorites()
     {
@@ -105,7 +105,13 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic,UICollectio
         cell.moviePoster.kf.indicatorType = .activity
         let posterUrl = URL(string: movie.posterImage!)
         cell.moviePoster.kf.setImage(with: posterUrl)
-        cell.movieTitle.text = String(movie.title!)
+        cell.movieTitle.text = movie.title!
+        cell.removeFromFav = {
+            self.interactor?.removeFromFavorite(movie.id!) {
+                self.moviesList.remove(at: (indexPath as NSIndexPath).row)
+                self.moviesCollection.reloadData()
+            }
+        }
         if movie.isFavorite {
             cell.favoriteIcon.setImage(UIImage(named: "baseline_favorite_black_48pt_1x.png"), for: .normal)
         } else {
@@ -119,7 +125,13 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic,UICollectio
     }
     
     func displayLoading(_ show: Bool) {
-        
+        if show {
+            HUD.dimsBackground = true
+            HUD.show(HUDContentType.progress)
+        } else {
+            HUD.dimsBackground = false
+            HUD.flash(.success)
+        }
     }
     
     func displayError() {

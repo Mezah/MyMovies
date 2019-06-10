@@ -11,9 +11,16 @@ import UIKit
 
 class FavoriteCell : UICollectionViewCell {
     
+    var removeFromFav:(() -> ()) = {}
+    
     @IBOutlet weak var moviePoster: UIImageView!
     
     @IBOutlet weak var movieTitle: UILabel!
  
     @IBOutlet weak var favoriteIcon:UIButton!
+    
+    
+    @IBAction func RemoveFromFavorite(_ sender: UIButton) {
+        removeFromFav()
+    }
 }
