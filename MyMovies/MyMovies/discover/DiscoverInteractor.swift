@@ -25,10 +25,13 @@ protocol DiscoverDataStore
 protocol DiscoverResponse :class {
     func showMoviesList(moviesList:[LocalMovie])
     func showError()
+    func noInternet()
 }
 
 class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore,DiscoverResponse
 {
+    
+    
     var moviesList: [LocalMovie] = [LocalMovie]()
     
    
@@ -59,6 +62,11 @@ class DiscoverInteractor: DiscoverBusinessLogic, DiscoverDataStore,DiscoverRespo
     
     func showError() {
         presenter?.presentLoadingState(false)
+        presenter?.presentError()
     }
     
+    func noInternet() {
+        presenter?.presentLoadingState(false)
+        presenter?.presentNoInternetMessege()
+    }
 }

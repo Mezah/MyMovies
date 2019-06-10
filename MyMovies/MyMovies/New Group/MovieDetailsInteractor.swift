@@ -47,10 +47,14 @@ class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore
         presenter?.presentLoadingState(true)
         
         worker?.loadMovieDetails(movieId){
-            (details,error) in
+            (details,error,noConnection) in
             
             self.presenter?.presentLoadingState(false)
             
+            if noConnection {
+                self.presenter?.presentNoInternetMessege()
+                return
+            }
             if error {
                 self.presenter?.presentError()
                 return

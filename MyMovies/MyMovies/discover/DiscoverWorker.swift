@@ -17,6 +17,7 @@ import CoreData
 class DiscoverWorker {
     private let dataController = DataController.shared
     
+    
     func fetchMoviesWith(_ request: Discover.DiscoverMovies.Request,_ results:DiscoverResponse)  {
         
         let params:String
@@ -32,34 +33,41 @@ class DiscoverWorker {
         if let movieResults = try? dataController.viewContext.fetch(fetchReq){
             
             if movieResults.isEmpty {
-                
-                DiscoverMDB.discover(discoverType: DiscoverType.movie    , params: [DiscoverParam.sort_by(params)]) {
-                    (clientReturn, moviesList, TvList) in
-                    
-                    if let error = clientReturn.error {
-                        // handle error
-                        print(error.localizedDescription)
-                        results.showError()
-                        return
-                    }
-                    
-                    var localMovies = [LocalMovie]()
-                    if let apiMoviesList = moviesList {
-                        let appMovies = convertMovies(movieDb: apiMoviesList)
-                        for movie in appMovies {
-                            let localMovie = LocalMovie(context: self.dataController.viewContext)
-                            localMovie.id = String(describing: movie.id!)
-                            localMovie.movieTitle = movie.title
-                            localMovie.backdrop = movie.backdropPath
-                            localMovie.posterPath = movie.posterPath
-                            localMovie.movieRate = movie.movieRate!
-                            localMovies.append(localMovie)
-                            try? self.dataController.viewContext.save()
-                        }
-                        results.showMoviesList(moviesList: localMovies)
+               
+                if !Connectivity.isConnectedToInternet() {
+                    results.noInternet()
+            
+                } else {
+                    DiscoverMDB.discover(discoverType: DiscoverType.movie    , params: [DiscoverParam.sort_by(params)]) {
+                        (clientReturn, moviesList, TvList) in
                         
+                        if let error = clientReturn.error {
+                            // handle error
+                            print(error.localizedDescription)
+                            results.showError()
+                            return
+                        }
+                        
+                        var localMovies = [LocalMovie]()
+                        if let apiMoviesList = moviesList {
+                            let appMovies = convertMovies(movieDb: apiMoviesList)
+                            for movie in appMovies {
+                                let localMovie = LocalMovie(context: self.dataController.viewContext)
+                                localMovie.id = String(describing: movie.id!)
+                                localMovie.movieTitle = movie.title
+                                localMovie.backdrop = movie.backdropPath
+                                localMovie.posterPath = movie.posterPath
+                                localMovie.movieRate = movie.movieRate!
+                                localMovies.append(localMovie)
+                                try? self.dataController.viewContext.save()
+                            }
+                            results.showMoviesList(moviesList: localMovies)
+                            
+                        }
                     }
+                  
                 }
+                
             }
             else {
                 results.showMoviesList(moviesList: movieResults)

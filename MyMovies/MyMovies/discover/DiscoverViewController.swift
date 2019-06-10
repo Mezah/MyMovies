@@ -102,6 +102,9 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
     
     func displayNoInternet() {
         // show No Internet messege logic
+        let alert = UIAlertController(title: "No Internet", message: "Please Check you internet Connection", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func displayLoading(_ show: Bool) {
@@ -116,7 +119,10 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
     }
     
     func displayError() {
-        // TODO show Errors
+        
+        let alert = UIAlertController(title: "Error", message: "An Error occured", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     // MARK: CollectionViewController protocol
     
