@@ -12,6 +12,7 @@
 
 import UIKit
 import TMDBSwift
+import ObjectMapper
 
 enum Discover
 {
@@ -22,12 +23,30 @@ enum Discover
     enum Request{
        case Popular,Recent
     }
-    struct Movie {
+    struct Movie : Mappable {
+        
+        
         var id :Int? 
         var title:String?
         var posterPath:String? = ""
         var backdropPath:String? = ""
         var movieRate:Double?
+        
+        init() {
+            
+        }
+        init?(map: Map) {
+            
+        }
+        
+        mutating func mapping(map: Map) {
+            id              <- map["id"]
+            title           <- map["title"]
+            posterPath      <- map["poster_path"]
+            backdropPath    <- map["backdrop_path"]
+            movieRate       <- map["vote_average"]
+          
+        }
         
     }
     struct Response {

@@ -120,22 +120,4 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic,UICollectio
         return cell
     }
     
-    func displayNoInternet() {
-        
-    }
-    
-    func displayLoading(_ show: Bool) {
-        if show {
-            HUD.dimsBackground = true
-            HUD.show(HUDContentType.progress)
-        } else {
-            HUD.dimsBackground = false
-            HUD.flash(.success)
-        }
-    }
-    
-    func displayError() {
-        
-    }
-    
 }

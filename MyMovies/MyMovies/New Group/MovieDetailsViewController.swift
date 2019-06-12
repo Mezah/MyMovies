@@ -15,7 +15,7 @@ import PKHUD
 
 protocol MovieDetailsDisplayLogic: MainDisplayLogic
 {
-    func displatMovieInformation(viewModel: MovieData.ViewModel)
+    func displatMovieInformation(viewModel: MovieDetailsViewModel)
 }
 
 class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
@@ -106,11 +106,11 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
    
     
     func loadMovieDetails(){
-        let request = MovieData.MovieInformation.Request()
-        interactor?.loadMovieDetails(request: request)
+    
+        interactor?.loadMovieDetails()
     }
     
-    func displatMovieInformation(viewModel: MovieData.ViewModel){
+    func displatMovieInformation(viewModel: MovieDetailsViewModel){
         self.moviePoster.kf.indicatorType = .activity
         self.moviePoster.kf.setImage(with: viewModel.postUrl)
         self.movieTitle.text = viewModel.movieTitle
@@ -125,27 +125,6 @@ class MovieDetailsViewController: UIViewController, MovieDetailsDisplayLogic{
         }
     }
     
-    func displayNoInternet() {
-        let alert = UIAlertController(title: "No Internet", message: "Please Check you internet Connection", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
     
-    func displayLoading(_ show: Bool) {
-        if show {
-            HUD.dimsBackground = true
-            HUD.show(HUDContentType.progress)
-        } else {
-            HUD.dimsBackground = true
-            HUD.flash(.success, delay: 1.0)
-        }
-        
-    }
-    
-    func displayError() {
-        let alert = UIAlertController(title: "Error", message: "An Error occured", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
     
 }

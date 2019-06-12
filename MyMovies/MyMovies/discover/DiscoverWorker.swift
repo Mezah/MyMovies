@@ -18,62 +18,58 @@ class DiscoverWorker {
     private let dataController = DataController.shared
     
     
+    func fetchMoviesWith(){
+        NetworkClient.shared.fetchPopularMovies()
+    }
+    
     func fetchMoviesWith(_ request: Discover.DiscoverMovies.Request,_ results:DiscoverResponse)  {
         
-        let params:String
-        
-        switch request {
-        case .Popular:
-            params =  DiscoverSortByMovie.popularity_desc.rawValue
-        case .Recent:
-            params =  DiscoverSortByMovie.release_date_desc.rawValue
-        }
         // fetch data locally first if not found call api
         let fetchReq : NSFetchRequest<LocalMovie> = LocalMovie.fetchRequest()
         if let movieResults = try? dataController.viewContext.fetch(fetchReq){
-            
             if movieResults.isEmpty {
-               
+                
                 if !Connectivity.isConnectedToInternet() {
                     results.noInternet()
-            
+                    
                 } else {
-                    DiscoverMDB.discover(discoverType: DiscoverType.movie    , params: [DiscoverParam.sort_by(params)]) {
-                        (clientReturn, moviesList, TvList) in
+                    NetworkClient.shared.fetchPopularMovies().responseString {response in
+                        let statusCode = response.response?.statusCode
                         
-                        if let error = clientReturn.error {
+                        if statusCode == 200 {
+                            // response success
+                            if let jsonString = response.result.value {
+                                let disocverResponse = DiscoveMoviesResponse(JSONString: jsonString)
+                                var localMovies = [LocalMovie]()
+                                if let apiMoviesList = disocverResponse?.result {
+                                    
+                                    for movie in apiMoviesList {
+                                        let localMovie = LocalMovie(context: self.dataController.viewContext)
+                                        localMovie.id = String(describing: movie.id!)
+                                        localMovie.movieTitle = movie.title
+                                        localMovie.backdrop = movie.backdropPath
+                                        localMovie.posterPath = movie.posterPath
+                                        localMovie.movieRate = movie.movieRate!
+                                        localMovies.append(localMovie)
+                                        try? self.dataController.viewContext.save()
+                                    }
+                                    results.showMoviesList(moviesList: localMovies)
+                                    
+                                }
+                            }
+                            
+                        } else if statusCode == 401 || statusCode==404 {
+                            // an error occured
                             // handle error
-                            print(error.localizedDescription)
                             results.showError()
                             return
                         }
-                        
-                        var localMovies = [LocalMovie]()
-                        if let apiMoviesList = moviesList {
-                            let appMovies = convertMovies(movieDb: apiMoviesList)
-                            for movie in appMovies {
-                                let localMovie = LocalMovie(context: self.dataController.viewContext)
-                                localMovie.id = String(describing: movie.id!)
-                                localMovie.movieTitle = movie.title
-                                localMovie.backdrop = movie.backdropPath
-                                localMovie.posterPath = movie.posterPath
-                                localMovie.movieRate = movie.movieRate!
-                                localMovies.append(localMovie)
-                                try? self.dataController.viewContext.save()
-                            }
-                            results.showMoviesList(moviesList: localMovies)
-                            
-                        }
-                    }
-                  
-                }
-                
+                    }}
             }
             else {
                 results.showMoviesList(moviesList: movieResults)
             }
+            
         }
-        
-        
     }
 }

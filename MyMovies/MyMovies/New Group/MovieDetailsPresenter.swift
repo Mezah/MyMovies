@@ -26,7 +26,7 @@ class MovieDetailsPresenter: MovieDetailsPresentationLogic
   
   func presentMovieDetails(movieDetails details:LocalMovieDetails)
   {
-    let viewModel = MovieData.ViewModel(details)
+    let viewModel = MovieDetailsViewModel(details)
     viewController?.displatMovieInformation(viewModel: viewModel)
   }
     

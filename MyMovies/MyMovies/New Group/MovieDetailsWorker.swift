@@ -40,7 +40,7 @@ class MovieDetailsWorker{
         // fetch data locally first if not found call api
         let fetchReq : NSFetchRequest<LocalMovieDetails> = LocalMovieDetails.fetchRequest()
         let detailsPredicate = NSPredicate(format: "id == %@", String(movieId))
-                fetchReq.predicate = detailsPredicate
+        fetchReq.predicate = detailsPredicate
         //        fetchReq.fetchLimit = 1
         
         let movieFetchRequest :NSFetchRequest<LocalMovie> = LocalMovie.fetchRequest()
@@ -50,55 +50,57 @@ class MovieDetailsWorker{
         if let movieDetails = try? dataController.viewContext.fetch(fetchReq) {
             if movieDetails.count > 0 {
                 completion(movieDetails[0],false,
-                false)
+                           false)
                 return
             }
         }
         
         if Connectivity.isConnectedToInternet() {
-            MovieMDB.movie(movieID: movieId, completion: ({ (clientReturn, movieInfo) in
-                if let error = clientReturn.error {
-                    // handle error
-                    print(error.localizedDescription)
+            NetworkClient.shared.fetchMovieDetails(movieID:String(movieId))
+                .responseString { response in
+                    let statusCode = response.response?.statusCode
                     
-                    completion(nil,true,false)
-                    return
-                }
-                let localMovieDetails = LocalMovieDetails(context: self.dataController.viewContext)
-                
-                if let details = movieInfo {
-                    let appMovieDetails = convertMovieDetails(details: details)
-                    
-                    localMovieDetails.id = String(describing: appMovieDetails.id!)
-                    localMovieDetails.isFavorite = false
-                    localMovieDetails.backdropImage = appMovieDetails.backdropPath
-                    localMovieDetails.posterImage = appMovieDetails.posterPath
-                    localMovieDetails.runtime = String(describing: appMovieDetails.runTime)
-                    localMovieDetails.overView = appMovieDetails.overView
-                    localMovieDetails.voteCount = appMovieDetails.voteCount ?? 0.0
-                    localMovieDetails.title = appMovieDetails.title
-                    localMovieDetails.movieRate = appMovieDetails.movieRate ?? 0.0
-                    
-                    for gener in appMovieDetails.geners {
-                        let movieGener = MovieGener(context: self.dataController.viewContext)
-                        movieGener.id = String(describing: gener.id)
-                        movieGener.name = gener.name
-                        movieGener.movie = localMovieDetails
-                        //                            try? self.dataController.viewContext.save()
-                        localMovieDetails.addToGeners(movieGener)
-                    }
-                    if let lm = try? self.dataController.viewContext.fetch(movieFetchRequest) {
-                        if lm.count > 0 {
-                            localMovieDetails.localMovie = lm[0]
-                            lm[0].detail = localMovieDetails
+                    if statusCode == 200 {
+                        if let jsonString = response.result.value {
+                            let movieDetails = MovieInformation(JSONString:jsonString)
+                            let localMovieDetails = LocalMovieDetails(context: self.dataController.viewContext)
+                            
+                            if let appMovieDetails = movieDetails {
+                                localMovieDetails.id = String(describing: appMovieDetails.id!)
+                                localMovieDetails.isFavorite = false
+                                localMovieDetails.backdropImage = appMovieDetails.backdropPath
+                                localMovieDetails.posterImage = appMovieDetails.posterPath
+                                localMovieDetails.runtime = String(describing: appMovieDetails.runTime)
+                                localMovieDetails.overView = appMovieDetails.overView
+                                localMovieDetails.voteCount = appMovieDetails.voteCount ?? 0.0
+                                localMovieDetails.title = appMovieDetails.title
+                                localMovieDetails.movieRate = appMovieDetails.movieRate ?? 0.0
+                                
+                                for gener in appMovieDetails.geners {
+                                    let movieGener = MovieGener(context: self.dataController.viewContext)
+                                    movieGener.id = String(describing: gener.id)
+                                    movieGener.name = gener.name
+                                    movieGener.movie = localMovieDetails
+                                    //                            try? self.dataController.viewContext.save()
+                                    localMovieDetails.addToGeners(movieGener)
+                                }
+                                if let lm = try? self.dataController.viewContext.fetch(movieFetchRequest) {
+                                    if lm.count > 0 {
+                                        localMovieDetails.localMovie = lm[0]
+                                        lm[0].detail = localMovieDetails
+                                    }
+                                }
+                            }
+                            try? self.dataController.viewContext.save()
+                            completion(localMovieDetails,false,false)
                         }
                     }
-                }
-                try? self.dataController.viewContext.save()
-                completion(localMovieDetails,false,false)
-            }))
+                    else if statusCode == 401 || statusCode == 404 {
+                        completion(nil,true,false)
+                    }
+            }
         } else {
-           completion(nil,false,true)
+            completion(nil,false,true)
         }
         
         

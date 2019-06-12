@@ -20,7 +20,7 @@ protocol MovieDetailsResponse :class {
 
 protocol MovieDetailsBusinessLogic
 {
-    func loadMovieDetails(request: MovieData.MovieInformation.Request)
+    func loadMovieDetails()
     func addMovieToFavorite(_ completion: @escaping (_ isFav:Bool) -> ())
 }
 
@@ -41,7 +41,7 @@ class MovieDetailsInteractor: MovieDetailsBusinessLogic, MovieDetailsDataStore
     
     // MARK: Do something
     
-    func loadMovieDetails(request: MovieData.MovieInformation.Request)
+    func loadMovieDetails()
     {
         worker = MovieDetailsWorker()
         presenter?.presentLoadingState(true)

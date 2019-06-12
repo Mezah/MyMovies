@@ -11,91 +11,110 @@
 //
 
 import UIKit
+import ObjectMapper
 
-enum MovieData
-{
-    // MARK: Use cases
+// MARK: Use cases
+struct Gener :Mappable{
     
-    enum MovieInformation
-    {
-        struct Request{
-           
-        }
-        struct Response {
-        }
-        struct Gener {
-            var id:Int?
-            var name:String?
-            
-            init(_ id:Int? , _ name:String?) {
-                self.id = id
-                self.name = name
-            }
-        }
-        struct MovieDetails {
-            var id :Int? = -1
-            var title:String? = ""
-            var overView:String? = ""
-            var voteCount:Double? = 0
-            var posterPath:String? = ""
-            var backdropPath:String? = ""
-            var movieRate:Double? = 0.0
-            var runTime:Int? = 0
-            var geners:[Gener] = [Gener]()
-            
+    
+    var id:Int?
+    var name:String?
+    
+    init(_ id:Int? , _ name:String?) {
+        self.id = id
+        self.name = name
+    }
+    
+    init?(map: Map) {
+        
+    }
+    
+    mutating func mapping(map: Map) {
+        id              <- map["id"]
+        name           <- map["name"]
+    }
+}
+struct MovieInformation :Mappable{
+    
+    
+    var id :Int? = -1
+    var title:String? = ""
+    var overView:String? = ""
+    var voteCount:Double? = 0
+    var posterPath:String? = ""
+    var backdropPath:String? = ""
+    var movieRate:Double? = 0.0
+    var runTime:Int? = 0
+    var geners:[Gener] = [Gener]()
+    
+    init?(map: Map) {
+        
+    }
+    
+    mutating func mapping(map: Map) {
+        id              <- map["id"]
+        title           <- map["title"]
+        posterPath      <- map["poster_path"]
+        backdropPath    <- map["backdrop_path"]
+        movieRate       <- map["vote_average"]
+        overView       <- map["overview"]
+        runTime       <- map["runtime"]
+        voteCount       <- map["vote_count"]
+        geners       <- map["geners"]
+    }
+    
+}
+
+struct MovieDetailsViewModel{
+    var movieDetails:LocalMovieDetails
+    
+    var isFavorite :Bool {
+        get {
+            return movieDetails.isFavorite
         }
     }
-    struct ViewModel{
-        var movieDetails:LocalMovieDetails
+    init(_ movieDetails:LocalMovieDetails) {
+        self.movieDetails = movieDetails
+    }
+    
+    var movieTitle:String {
+        get {
+            return movieDetails.title ?? ""
+        }
+    }
+    
+    var movieOverView:String {
+        get {
+            return movieDetails.overView ?? ""
+        }
+    }
+    
+    var movieReviewers :String {
+        get {
+            return "\(String(describing:movieDetails.voteCount))"
+        }
+    }
+    var postUrl:URL? {
+        get {
+            return URL(string: movieDetails.backdropImage! )
+        }
+    }
+    var rate:String {
+        get {
+            return "\(String(describing:movieDetails.movieRate))/\(10)"
+        }
+    }
+    var runtimeAndGeners: String {
+        var title = ""
         
-        var isFavorite :Bool {
-            get {
-                return movieDetails.isFavorite
+        for (index,gener) in movieDetails.geners!.enumerated() {
+            title.append(contentsOf: (gener as AnyObject).name!)
+            if index < (movieDetails.geners?.count)! {
+                title.append(contentsOf: " | ")
             }
         }
-        init(_ movieDetails:LocalMovieDetails) {
-            self.movieDetails = movieDetails
-        }
+        print(title)
+        return "\(movieDetails.runtime) min" + title
         
-        var movieTitle:String {
-            get {
-                return movieDetails.title ?? ""
-            }
-        }
-        
-        var movieOverView:String {
-            get {
-                return movieDetails.overView ?? ""
-            }
-        }
-        
-        var movieReviewers :String {
-            get {
-                return "\(String(describing:movieDetails.voteCount))"
-            }
-        }
-        var postUrl:URL? {
-            get {
-                return URL(string: movieDetails.backdropImage! )
-            }
-        }
-        var rate:String {
-            get {
-                return "\(String(describing:movieDetails.movieRate))/\(10)"
-            }
-        }
-        var runtimeAndGeners: String {
-            var title = ""
-            
-            for (index,gener) in movieDetails.geners!.enumerated() {
-                title.append(contentsOf: (gener as AnyObject).name!)
-                if index < (movieDetails.geners?.count)! {
-                    title.append(contentsOf: " | ")
-                }
-            }
-            print(title)
-            return "\(movieDetails.runtime) min" + title
-            
-        }
     }
 }

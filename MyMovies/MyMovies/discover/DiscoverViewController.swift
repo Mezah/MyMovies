@@ -100,30 +100,6 @@ class DiscoverViewController: UIViewController,UICollectionViewDelegate,UICollec
         self.moviesCollection.reloadData()
     }
     
-    func displayNoInternet() {
-        // show No Internet messege logic
-        let alert = UIAlertController(title: "No Internet", message: "Please Check you internet Connection", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func displayLoading(_ show: Bool) {
-        
-        if show {
-            HUD.dimsBackground = true
-            HUD.show(HUDContentType.progress)
-        } else {
-            HUD.dimsBackground = false
-            HUD.flash(.success)
-        }
-    }
-    
-    func displayError() {
-        
-        let alert = UIAlertController(title: "Error", message: "An Error occured", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
     // MARK: CollectionViewController protocol
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

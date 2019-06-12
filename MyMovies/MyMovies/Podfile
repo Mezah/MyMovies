@@ -1,13 +1,13 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '12.0'
-
+platform :ios, '12.0'
+project '/Users/hazem/projects/udacityProjects/Final Project/MyMovies/MyMovies/MyMovies/MyMovies.xcodeproj'
 target 'MyMovies' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
   # Pods for MyMovies
   pod "TMDBSwift"
   pod 'Kingfisher', '~> 4.0'
-  pod 'PKHUD', '~> 5.0'
+  pod 'PKHUD', '~> 5.2.1'
   pod 'Alamofire', '~> 4.8.2'
+  pod 'ObjectMapper', '~> 3.4.2'
 end
