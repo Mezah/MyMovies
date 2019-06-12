@@ -16,7 +16,7 @@ class NetworkClient {
         static let baseUrl:String = "https://api.themoviedb.org/3/"
         static let discoverMovie:String = "discover/movie"
         static let movie:String = "movie/"
-        
+        static let config:String = "configuration"
         struct ApiKeys {
             static let apiKey:String = "api_key"
             static let sortByKey:String = "sort_by"
@@ -38,6 +38,11 @@ class NetworkClient {
         static func movieDetailsUrl(movieID:String) ->String {
             return baseUrl + movie + movieID
         }
+        
+        static func apiConfiguration() -> String {
+            return baseUrl + config
+        }
+        
         static func discoverMoviesUrlWithParameters() -> String {
             
             var comps = URLComponents(string: discoverMoviesUrl())!
@@ -62,6 +67,15 @@ class NetworkClient {
             return comps.string!
             
         }
+        
+        static func apiConfigurationUrlWithParamters() ->String {
+            var comps = URLComponents(string: apiConfiguration())!
+            
+            let apiQurery = URLQueryItem(name: ApiKeys.apiKey, value: "7544d4cab069b83f6de42f06f59a1759")
+            comps.queryItems = [ apiQurery]
+            
+            return comps.string!
+        }
     
 }
     func fetchPopularMovies() -> DataRequest{
@@ -70,5 +84,9 @@ class NetworkClient {
 
     func fetchMovieDetails(movieID:String) -> DataRequest {
         return Alamofire.request(ApiInfo.movieDetailsUrlWithParamters(movieID: movieID))
+    }
+    
+    func fetchApiConfiguration() ->DataRequest {
+        return Alamofire.request(ApiInfo.apiConfigurationUrlWithParamters())
     }
 }

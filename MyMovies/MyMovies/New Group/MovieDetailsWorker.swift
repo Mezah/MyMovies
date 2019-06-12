@@ -17,6 +17,8 @@ import CoreData
 class MovieDetailsWorker{
     
     private var dataController = DataController.shared
+    private let apiConfig = ApiConfiguration.shared
+    
     
     func addMovieToFavortie(_ movieId:Int,_ isFavorite:Bool,completion: @escaping (_ added:Bool) -> ()) {
         
@@ -68,8 +70,12 @@ class MovieDetailsWorker{
                             if let appMovieDetails = movieDetails {
                                 localMovieDetails.id = String(describing: appMovieDetails.id!)
                                 localMovieDetails.isFavorite = false
-                                localMovieDetails.backdropImage = appMovieDetails.backdropPath
-                                localMovieDetails.posterImage = appMovieDetails.posterPath
+                                if let posterUrl = appMovieDetails.posterPath {
+                                    localMovieDetails.posterImage = String(self.apiConfig.baseUrl + self.apiConfig.posterSize() + posterUrl)
+                                }
+                                if let backdropPath = appMovieDetails.backdropPath {
+                                    localMovieDetails.backdropImage = String(self.apiConfig.baseUrl + self.apiConfig.posterSize() + backdropPath)
+                                }
                                 localMovieDetails.runtime = String(describing: appMovieDetails.runTime)
                                 localMovieDetails.overView = appMovieDetails.overView
                                 localMovieDetails.voteCount = appMovieDetails.voteCount ?? 0.0

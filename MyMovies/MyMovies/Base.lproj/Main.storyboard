@@ -180,6 +180,9 @@
                                                         <constraint firstAttribute="height" constant="30" id="ydT-4R-SXm"/>
                                                     </constraints>
                                                     <state key="normal" image="baseline_favorite_black_48pt_1x"/>
+                                                    <connections>
+                                                        <action selector="RemoveFromFavorite:" destination="eR4-HG-5LM" eventType="touchUpInside" id="W1t-0I-Agd"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </view>

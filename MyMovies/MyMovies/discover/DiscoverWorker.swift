@@ -16,7 +16,7 @@ import CoreData
 
 class DiscoverWorker {
     private let dataController = DataController.shared
-    
+    private let apiConfig = ApiConfiguration.shared
     
     func fetchMoviesWith(){
         NetworkClient.shared.fetchPopularMovies()
@@ -47,8 +47,12 @@ class DiscoverWorker {
                                         let localMovie = LocalMovie(context: self.dataController.viewContext)
                                         localMovie.id = String(describing: movie.id!)
                                         localMovie.movieTitle = movie.title
-                                        localMovie.backdrop = movie.backdropPath
-                                        localMovie.posterPath = movie.posterPath
+                                        if let posterUrl = movie.posterPath {
+                                            localMovie.posterPath = String(self.apiConfig.baseUrl + self.apiConfig.posterSize() + posterUrl)
+                                        }
+                                        if let backdropPath = movie.backdropPath {
+                                            localMovie.backdrop = String(self.apiConfig.baseUrl + self.apiConfig.posterSize() + backdropPath)
+                                        }
                                         localMovie.movieRate = movie.movieRate!
                                         localMovies.append(localMovie)
                                         try? self.dataController.viewContext.save()
